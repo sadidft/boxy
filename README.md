@@ -3,7 +3,7 @@
 > Your offline markdown clipboard manager
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![GitHub Pages](https://img.shields.io/badge/demo-live-green)](https://yourusername.github.io/boxy)
+[![GitHub Pages](https://img.shields.io/badge/demo-live-green)](https://www.rafifsadid.my.id/boxy)
 
 ## ✨ Features
 
@@ -23,7 +23,7 @@
 2. Open in any modern browser
 3. Start creating boxes, tabs, and cards!
 
-Or visit the [live demo](https://yourusername.github.io/boxy)
+Or visit the [live demo](https://www.rafifsadid.my.id/boxy)
 
 ## 🔍 Search Commands
 
