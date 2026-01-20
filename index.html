@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boxy - Offline Clipboard Manager</title>
+  <link rel="stylesheet" href="boxy.css">
+</head>
+<body>
+
+  <div class="app" id="app">
+
+    <header class="app-header" id="appHeader">
+
+    </header>
+
+    <div class="app-toolbar" id="appToolbar">
+
+    </div>
+
+    <main class="app-main" id="appMain">
+
+    </main>
+
+    <footer class="app-footer" id="appFooter">
+
+    </footer>
+
+  </div>
+
+  <div class="modal-overlay" id="modalBox" data-modal="box">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalBoxTitle">New Box</h2>
+        <button class="btn-icon" data-modal-close aria-label="Close">
+          <span class="icon" data-icon="x"></span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBoxBody">
+
+      </div>
+      <div class="modal-footer" id="modalBoxFooter">
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalTab" data-modal="tab">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTabTitle">New Tab</h2>
+        <button class="btn-icon" data-modal-close aria-label="Close">
+          <span class="icon" data-icon="x"></span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalTabBody">
+
+      </div>
+      <div class="modal-footer" id="modalTabFooter">
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalCard" data-modal="card">
+    <div class="modal modal-lg" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalCardTitle">New Card</h2>
+        <button class="btn-icon" data-modal-close aria-label="Close">
+          <span class="icon" data-icon="x"></span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalCardBody">
+
+      </div>
+      <div class="modal-footer" id="modalCardFooter">
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalSettings" data-modal="settings">
+    <div class="modal modal-md" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <span class="icon" data-icon="box"></span>
+          Boxy Settings
+        </h2>
+        <button class="btn-icon" data-modal-close aria-label="Close">
+          <span class="icon" data-icon="x"></span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalSettingsBody">
+
+      </div>
+      <div class="modal-footer" id="modalSettingsFooter">
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalFormula" data-modal="formula">
+    <div class="modal modal-md" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <span class="icon" data-icon="function"></span>
+          Formula Guide
+        </h2>
+        <button class="btn-icon" data-modal-close aria-label="Close">
+          <span class="icon" data-icon="x"></span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalFormulaBody">
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" data-modal-close>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalConfirm" data-modal="confirm">
+    <div class="modal modal-sm" role="alertdialog" aria-modal="true">
+      <div class="modal-header">
+        <h2 class="modal-title" id="confirmTitle">Confirm</h2>
+      </div>
+      <div class="modal-body">
+        <p id="confirmMessage"></p>
+      </div>
+      <div class="modal-footer" id="confirmFooter">
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalVars" data-modal="vars">
+    <div class="modal modal-sm" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <span class="icon" data-icon="variable"></span>
+          Fill Variables
+        </h2>
+        <button class="btn-icon" data-modal-close aria-label="Close">
+          <span class="icon" data-icon="x"></span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalVarsBody">
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" data-modal-close>Cancel</button>
+        <button class="btn btn-primary" id="btnApplyVars">
+          <span class="icon" data-icon="clipboard"></span>
+          Copy
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite">
+
+  </div>
+
+  <div class="tooltip-container" id="tooltipContainer">
+
+    <div class="tooltip" id="tooltip" role="tooltip">
+      <span class="tooltip-logo icon-sm" data-icon="box"></span>
+      <span class="tooltip-text"></span>
+    </div>
+  </div>
+  <script src="boxy.js"></script>
+</body>
+</html>
