@@ -1,0 +1,61 @@
+name: Deploy Boxy to GitHub Pages
+
+on:
+  # Workflow dijalankan setiap ada push ke branch 'main'
+  push:
+    branches: ["main"]
+  # Memungkinkan Anda menjalankan workflow secara manual dari tab Actions
+  workflow_dispatch:
+
+# Mengatur izin GITHUB_TOKEN agar dapat melakukan deployment ke GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Konfigurasi concurrency: Membatalkan build yang sedang berjalan jika ada push baru
+# agar tidak terjadi konflik deployment.
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # Job 1: Build Proyek
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # Menggunakan versi LTS yang stabil
+          cache: 'npm'     # Mengaktifkan caching untuk npm agar build selanjutnya lebih cepat
+
+      - name: Install Dependencies
+        # Menggunakan 'npm ci' (clean install) bukan 'npm install'.
+        # 'npm ci' lebih ketat dan wajib sesuai dengan package-lock.json.
+        run: npm ci
+
+      - name: Build Project
+        # Menjalankan script build dari package.json (biasanya "tsc && vite build")
+        run: npm run build
+
+      - name: Upload Artifact
+        # Mengambil folder 'dist' hasil build Vite untuk di-upload
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+  # Job 2: Deploy ke GitHub Pages
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build # Job ini hanya jalan jika job 'build' sukses
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
