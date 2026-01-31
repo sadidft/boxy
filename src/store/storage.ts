@@ -71,6 +71,8 @@ export function loadState(): AppState {
       state.activeTabId = firstTab?.id || null;
     }
 
+    console.log(`[Boxy] Loaded from localStorage: ${state.boxes.length} boxes, ${state.tabs.length} tabs, ${state.cards.length} cards`);
+
     return state;
   } catch (error) {
     console.error('Failed to load state:', error);
@@ -90,9 +92,19 @@ function loadBackup(): AppState {
 
     const data = JSON.parse(backup);
     const state = getDefaultState();
-    state.boxes = data.boxes || [];
+    
+    // Apply migrations to ensure all required fields exist
+    state.boxes = (data.boxes || []).map((box: Box) => ({
+      ...box,
+      isMinimized: box.isMinimized ?? false,
+      isMaximized: box.isMaximized ?? false,
+    }));
     state.tabs = data.tabs || [];
-    state.cards = data.cards || [];
+    state.cards = (data.cards || []).map((card: Card) => ({
+      ...card,
+      history: card.history ?? [],
+      table: card.table ?? null,
+    }));
 
     if (state.boxes.length > 0) {
       state.activeBoxId = state.boxes[0].id;
@@ -100,8 +112,11 @@ function loadBackup(): AppState {
       state.activeTabId = firstTab?.id || null;
     }
 
+    console.log(`[Boxy] Loaded from backup: ${state.boxes.length} boxes, ${state.tabs.length} tabs, ${state.cards.length} cards`);
+
     return state;
-  } catch {
+  } catch (error) {
+    console.error('Failed to load backup:', error);
     return createInitialDataWithSample();
   }
 }
@@ -121,6 +136,8 @@ function createInitialDataWithSample(): AppState {
     order: 0,
     createdAt: now,
     updatedAt: now,
+    isMinimized: false,
+    isMaximized: false,
   };
 
   // Create sample tabs
@@ -255,7 +272,7 @@ export function saveState(state: AppState): boolean {
       cards: state.cards.map(card => ({
         ...card,
         // Limit history entries
-        history: card.history.slice(-4),
+        history: card.history ? card.history.slice(-4) : [],
       })),
       allTags: [...new Set(state.allTags)],
       actionHistory: state.actionHistory.slice(-7),
@@ -269,6 +286,9 @@ export function saveState(state: AppState): boolean {
 
     // Also save minimal backup
     saveBackup(state);
+
+    // Debug logging
+    console.log(`[Boxy] Saved to localStorage: ${state.boxes.length} boxes, ${state.tabs.length} tabs, ${state.cards.length} cards`);
 
     return true;
   } catch (error) {
@@ -329,8 +349,24 @@ function saveBackup(state: AppState): void {
  * Apply data migrations
  */
 function applyMigrations(data: StoredData): StoredData {
-  // Add migration logic here as needed
-  // Example: if (data._version < '1.0.23') { ... }
+  // Ensure all boxes have isMinimized and isMaximized fields
+  if (data.boxes) {
+    data.boxes = data.boxes.map(box => ({
+      ...box,
+      isMinimized: box.isMinimized ?? false,
+      isMaximized: box.isMaximized ?? false,
+    }));
+  }
+
+  // Ensure all cards have history array
+  if (data.cards) {
+    data.cards = data.cards.map(card => ({
+      ...card,
+      history: card.history ?? [],
+      table: card.table ?? null,
+    }));
+  }
+
   return data;
 }
 

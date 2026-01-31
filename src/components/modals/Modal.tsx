@@ -103,22 +103,30 @@ export function Modal({ isOpen, onClose, title, size = 'md', children, footer }:
 // Button components for modal footers
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'danger';
+  size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
 }
 
-export function Button({ variant = 'primary', children, className, ...props }: ButtonProps) {
+export function Button({ variant = 'primary', size = 'md', children, className, ...props }: ButtonProps) {
   const variants = {
     primary: 'bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white',
     secondary: 'bg-[var(--bg-tertiary)] hover:bg-[var(--border-primary)] text-[var(--text-primary)]',
     danger: 'bg-red-500 hover:bg-red-600 text-white',
   };
 
+  const sizes = {
+    sm: 'px-2 py-1 text-xs',
+    md: 'px-4 py-2 text-sm',
+    lg: 'px-6 py-3 text-base',
+  };
+
   return (
     <button
       className={cn(
-        'px-4 py-2 text-sm font-medium rounded-lg transition-colors',
+        'font-medium rounded-lg transition-colors',
         'disabled:opacity-50 disabled:cursor-not-allowed',
         variants[variant],
+        sizes[size],
         className
       )}
       {...props}

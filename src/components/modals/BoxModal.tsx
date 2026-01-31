@@ -37,7 +37,7 @@ export function BoxModal({ mode, box }: BoxModalProps) {
     }
 
     if (mode === 'create') {
-      dispatch({ type: 'CREATE_BOX', payload: { name: name.trim(), icon } });
+      dispatch({ type: 'CREATE_BOX', payload: { name: name.trim(), icon, isMinimized: false, isMaximized: false } });
       success('Box created');
     } else if (box) {
       dispatch({ type: 'UPDATE_BOX', payload: { id: box.id, updates: { name: name.trim(), icon } } });

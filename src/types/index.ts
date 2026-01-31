@@ -36,6 +36,8 @@ export interface Box {
   order: number;
   createdAt: number;
   updatedAt: number;
+  isMinimized: boolean;
+  isMaximized: boolean;
 }
 
 export interface Tab {

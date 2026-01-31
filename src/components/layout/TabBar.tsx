@@ -8,15 +8,25 @@ import { useApp, useModal, useToast } from '@/store/AppContext';
 import { DynamicIcon, Plus, X, Minus, Square, Star } from '@/components/icons/Icons';
 import { cn } from '@/utils/cn';
 
-export function TabBar() {
+interface TabBarProps {
+  boxId?: string;
+  showWindowControls?: boolean;
+  onMinimize?: (e: React.MouseEvent) => void;
+  onMaximize?: (e: React.MouseEvent) => void;
+  onClose?: (e: React.MouseEvent) => void;
+}
+
+export function TabBar({ boxId, showWindowControls = true, onMinimize, onMaximize, onClose }: TabBarProps = {}) {
   const { state, dispatch } = useApp();
   const { openModal } = useModal();
-  const { success } = useToast();
+  useToast(); // For potential future use
   const [draggedTabId, setDraggedTabId] = useState<string | null>(null);
 
-  const activeBox = state.boxes.find(b => b.id === state.activeBoxId);
+  // Use provided boxId or fall back to activeBoxId
+  const targetBoxId = boxId || state.activeBoxId;
+  const activeBox = state.boxes.find(b => b.id === targetBoxId);
   const tabs = state.tabs
-    .filter(t => t.boxId === state.activeBoxId)
+    .filter(t => t.boxId === targetBoxId)
     .sort((a, b) => {
       // Pinned tabs first
       if (a.pinned && !b.pinned) return -1;
@@ -37,26 +47,35 @@ export function TabBar() {
   }, [openModal, state.tabs]);
 
   const handleAddTab = useCallback(() => {
-    if (state.activeBoxId) {
+    if (targetBoxId) {
       openModal('createTab');
     }
-  }, [openModal, state.activeBoxId]);
+  }, [openModal, targetBoxId]);
 
-  const handleMinimizeBox = useCallback(() => {
-    // Minimize functionality - for now just show toast
-    success('Box minimized');
-  }, [success]);
+  // Use provided handlers or default handlers
+  const handleMinimizeBox = useCallback((e: React.MouseEvent) => {
+    if (onMinimize) {
+      onMinimize(e);
+    } else if (activeBox) {
+      dispatch({ type: 'TOGGLE_MINIMIZE_BOX', payload: activeBox.id });
+    }
+  }, [onMinimize, activeBox, dispatch]);
 
-  const handleMaximizeBox = useCallback(() => {
-    // Maximize functionality
-    success('Box maximized');
-  }, [success]);
+  const handleMaximizeBox = useCallback((e: React.MouseEvent) => {
+    if (onMaximize) {
+      onMaximize(e);
+    } else if (activeBox) {
+      dispatch({ type: 'TOGGLE_MAXIMIZE_BOX', payload: activeBox.id });
+    }
+  }, [onMaximize, activeBox, dispatch]);
 
-  const handleCloseBox = useCallback(() => {
-    if (activeBox) {
+  const handleCloseBox = useCallback((e: React.MouseEvent) => {
+    if (onClose) {
+      onClose(e);
+    } else if (activeBox) {
       openModal('deleteConfirm', { type: 'box', id: activeBox.id, name: activeBox.name });
     }
-  }, [openModal, activeBox]);
+  }, [onClose, openModal, activeBox]);
 
   // Drag handlers
   const handleDragStart = useCallback((e: React.DragEvent, tabId: string) => {
@@ -157,29 +176,31 @@ export function TabBar() {
       </div>
 
       {/* Window controls */}
-      <div className="flex items-center border-l border-[var(--border-primary)]">
-        <button
-          onClick={handleMinimizeBox}
-          className="flex items-center justify-center w-10 h-full text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
-          aria-label="Minimize"
-        >
-          <Minus size={16} />
-        </button>
-        <button
-          onClick={handleMaximizeBox}
-          className="flex items-center justify-center w-10 h-full text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
-          aria-label="Maximize"
-        >
-          <Square size={14} />
-        </button>
-        <button
-          onClick={handleCloseBox}
-          className="flex items-center justify-center w-10 h-full text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-red-500/20 hover:text-red-400 transition-colors"
-          aria-label="Close box"
-        >
-          <X size={16} />
-        </button>
-      </div>
+      {showWindowControls && (
+        <div className="flex items-center border-l border-[var(--border-primary)]">
+          <button
+            onClick={handleMinimizeBox}
+            className="flex items-center justify-center w-10 h-full text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
+            aria-label="Minimize"
+          >
+            <Minus size={16} />
+          </button>
+          <button
+            onClick={handleMaximizeBox}
+            className="flex items-center justify-center w-10 h-full text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
+            aria-label="Maximize"
+          >
+            <Square size={14} />
+          </button>
+          <button
+            onClick={handleCloseBox}
+            className="flex items-center justify-center w-10 h-full text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-red-500/20 hover:text-red-400 transition-colors"
+            aria-label="Close box"
+          >
+            <X size={16} />
+          </button>
+        </div>
+      )}
     </div>
   );
 }

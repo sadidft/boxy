@@ -1,15 +1,16 @@
 /**
  * Boxy Icon Components (Lucide-style)
+ * 150+ icons for comprehensive icon selection
  */
 import React from 'react';
 
 interface IconProps {
   size?: number;
   className?: string;
+  filled?: boolean;
 }
 
 const defaultProps = {
-  size: 24,
   fill: 'none',
   stroke: 'currentColor',
   strokeWidth: 2,
@@ -17,463 +18,500 @@ const defaultProps = {
   strokeLinejoin: 'round' as const,
 };
 
-export const Plus: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <line x1="12" y1="5" x2="12" y2="19" />
-    <line x1="5" y1="12" x2="19" y2="12" />
-  </svg>
-);
+// Helper to create icon component
+const createIcon = (paths: React.ReactNode): React.FC<IconProps> => {
+  return ({ size = 24, className }) => (
+    <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
+      {paths}
+    </svg>
+  );
+};
 
-export const X: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <line x1="18" y1="6" x2="6" y2="18" />
-    <line x1="6" y1="6" x2="18" y2="18" />
-  </svg>
-);
+// Core UI Icons
+export const Plus = createIcon(<><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></>);
+export const X = createIcon(<><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></>);
+export const Check = createIcon(<polyline points="20 6 9 17 4 12" />);
+export const Minus = createIcon(<line x1="5" y1="12" x2="19" y2="12" />);
 
+// Navigation
+export const ChevronLeft = createIcon(<polyline points="15 18 9 12 15 6" />);
+export const ChevronRight = createIcon(<polyline points="9 18 15 12 9 6" />);
+export const ChevronUp = createIcon(<polyline points="18 15 12 9 6 15" />);
+export const ChevronDown = createIcon(<polyline points="6 9 12 15 18 9" />);
+export const ChevronsLeft = createIcon(<><polyline points="11 17 6 12 11 7" /><polyline points="18 17 13 12 18 7" /></>);
+export const ChevronsRight = createIcon(<><polyline points="13 17 18 12 13 7" /><polyline points="6 17 11 12 6 7" /></>);
+export const ArrowUp = createIcon(<><line x1="12" y1="19" x2="12" y2="5" /><polyline points="5 12 12 5 19 12" /></>);
+export const ArrowDown = createIcon(<><line x1="12" y1="5" x2="12" y2="19" /><polyline points="19 12 12 19 5 12" /></>);
+export const ArrowLeft = createIcon(<><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></>);
+export const ArrowRight = createIcon(<><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></>);
+
+// Actions
 export const Settings: React.FC<IconProps> = ({ size = 24, className }) => (
   <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
     <circle cx="12" cy="12" r="3" />
     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
   </svg>
 );
+export const Search = createIcon(<><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></>);
+export const Edit = createIcon(<><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></>);
+export const Trash = createIcon(<><polyline points="3 6 5 6 21 6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></>);
+export const Download = createIcon(<><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></>);
+export const Upload = createIcon(<><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></>);
+export const Copy = createIcon(<><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></>);
+export const Clipboard = createIcon(<><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /><rect x="8" y="2" width="8" height="4" rx="1" ry="1" /></>);
+export const RefreshCw = createIcon(<><polyline points="23 4 23 10 17 10" /><polyline points="1 20 1 14 7 14" /><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" /></>);
+export const RotateCcw = createIcon(<><polyline points="1 4 1 10 7 10" /><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" /></>);
+export const ExternalLink = createIcon(<><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></>);
+export const Share = createIcon(<><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></>);
 
-export const Search: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <circle cx="11" cy="11" r="8" />
-    <line x1="21" y1="21" x2="16.65" y2="16.65" />
-  </svg>
-);
-
-export const Clipboard: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
-    <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
-  </svg>
-);
-
-export const Edit: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-  </svg>
-);
-
-export const Trash: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <polyline points="3 6 5 6 21 6" />
-    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-  </svg>
-);
-
-export const Pin: React.FC<IconProps & { filled?: boolean }> = ({ size = 24, className, filled }) => (
+// Pin and Star (with filled option)
+export const Pin: React.FC<IconProps> = ({ size = 24, className, filled }) => (
   <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className} fill={filled ? 'currentColor' : 'none'}>
     <path d="M12 17v5M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.89A2 2 0 0 0 5 15.24V17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.89A2 2 0 0 1 15 10.76V6a1 1 0 0 1 1-1h.5a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5H8a1 1 0 0 1 1 1z" />
   </svg>
 );
-
-export const GripVertical: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <circle cx="9" cy="12" r="1" />
-    <circle cx="9" cy="5" r="1" />
-    <circle cx="9" cy="19" r="1" />
-    <circle cx="15" cy="12" r="1" />
-    <circle cx="15" cy="5" r="1" />
-    <circle cx="15" cy="19" r="1" />
-  </svg>
-);
-
-export const ChevronLeft: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <polyline points="15 18 9 12 15 6" />
-  </svg>
-);
-
-export const ChevronRight: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <polyline points="9 18 15 12 9 6" />
-  </svg>
-);
-
-export const Star: React.FC<IconProps & { filled?: boolean }> = ({ size = 24, className, filled }) => (
+export const Star: React.FC<IconProps> = ({ size = 24, className, filled }) => (
   <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className} fill={filled ? 'currentColor' : 'none'}>
     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
   </svg>
 );
-
-export const Circle: React.FC<IconProps & { filled?: boolean }> = ({ size = 24, className, filled }) => (
+export const Heart: React.FC<IconProps> = ({ size = 24, className, filled }) => (
+  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className} fill={filled ? 'currentColor' : 'none'}>
+    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+  </svg>
+);
+export const Bookmark: React.FC<IconProps> = ({ size = 24, className, filled }) => (
+  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className} fill={filled ? 'currentColor' : 'none'}>
+    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+  </svg>
+);
+export const Circle: React.FC<IconProps> = ({ size = 24, className, filled }) => (
   <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className} fill={filled ? 'currentColor' : 'none'}>
     <circle cx="12" cy="12" r="10" />
   </svg>
 );
 
-export const MoreVertical: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <circle cx="12" cy="12" r="1" />
-    <circle cx="12" cy="5" r="1" />
-    <circle cx="12" cy="19" r="1" />
-  </svg>
-);
+// UI Elements
+export const GripVertical = createIcon(<><circle cx="9" cy="12" r="1" /><circle cx="9" cy="5" r="1" /><circle cx="9" cy="19" r="1" /><circle cx="15" cy="12" r="1" /><circle cx="15" cy="5" r="1" /><circle cx="15" cy="19" r="1" /></>);
+export const MoreVertical = createIcon(<><circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" /></>);
+export const MoreHorizontal = createIcon(<><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></>);
+export const Menu = createIcon(<><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="18" x2="21" y2="18" /></>);
+export const Square = createIcon(<rect x="3" y="3" width="18" height="18" rx="2" ry="2" />);
+export const CheckSquare = createIcon(<><polyline points="9 11 12 14 22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></>);
 
-export const Minus: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <line x1="5" y1="12" x2="19" y2="12" />
-  </svg>
-);
+// Window Controls
+export const Maximize2 = createIcon(<><polyline points="15 3 21 3 21 9" /><polyline points="9 21 3 21 3 15" /><line x1="21" y1="3" x2="14" y2="10" /><line x1="3" y1="21" x2="10" y2="14" /></>);
+export const Minimize2 = createIcon(<><polyline points="4 14 10 14 10 20" /><polyline points="20 10 14 10 14 4" /><line x1="14" y1="10" x2="21" y2="3" /><line x1="3" y1="21" x2="10" y2="14" /></>);
+export const Maximize = createIcon(<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />);
+export const Minimize = createIcon(<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />);
 
-export const Square: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-  </svg>
-);
+// Alerts & Status
+export const AlertCircle = createIcon(<><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></>);
+export const AlertTriangle = createIcon(<><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></>);
+export const Info = createIcon(<><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></>);
+export const HelpCircle = createIcon(<><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><line x1="12" y1="17" x2="12.01" y2="17" /></>);
+export const CheckCircle = createIcon(<><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></>);
+export const XCircle = createIcon(<><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></>);
 
-export const Maximize2: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <polyline points="15 3 21 3 21 9" />
-    <polyline points="9 21 3 21 3 15" />
-    <line x1="21" y1="3" x2="14" y2="10" />
-    <line x1="3" y1="21" x2="10" y2="14" />
-  </svg>
-);
+// Files & Folders
+export const Box = createIcon(<><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" x2="12" y2="12" /></>);
+export const Folder = createIcon(<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />);
+export const FolderOpen = createIcon(<><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" /><path d="M2 10h20" /></>);
+export const FolderPlus = createIcon(<><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" /><line x1="12" y1="11" x2="12" y2="17" /><line x1="9" y1="14" x2="15" y2="14" /></>);
+export const File = createIcon(<><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></>);
+export const FilePlus = createIcon(<><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="12" y1="18" x2="12" y2="12" /><line x1="9" y1="15" x2="15" y2="15" /></>);
+export const FileText = createIcon(<><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></>);
+export const Archive = createIcon(<><polyline points="21 8 21 21 3 21 3 8" /><rect x="1" y="3" width="22" height="5" /><line x1="10" y1="12" x2="14" y2="12" /></>);
+export const Package = createIcon(<><line x1="16.5" y1="9.4" x2="7.5" y2="4.21" /><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" x2="12" y2="12" /></>);
 
-export const Minimize2: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <polyline points="4 14 10 14 10 20" />
-    <polyline points="20 10 14 10 14 4" />
-    <line x1="14" y1="10" x2="21" y2="3" />
-    <line x1="3" y1="21" x2="10" y2="14" />
-  </svg>
-);
+// Communication
+export const Mail = createIcon(<><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></>);
+export const MessageSquare = createIcon(<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />);
+export const MessageCircle = createIcon(<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />);
+export const Send = createIcon(<><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></>);
+export const Inbox = createIcon(<><polyline points="22 12 16 12 14 15 10 15 8 12 2 12" /><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" /></>);
+export const Bell = createIcon(<><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></>);
+export const BellOff = createIcon(<><path d="M13.73 21a2 2 0 0 1-3.46 0" /><path d="M18.63 13A17.89 17.89 0 0 1 18 8" /><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14" /><path d="M18 8a6 6 0 0 0-9.33-5" /><line x1="1" y1="1" x2="23" y2="23" /></>);
+export const Phone = createIcon(<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />);
 
-export const Check: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <polyline points="20 6 9 17 4 12" />
-  </svg>
-);
+// Users
+export const User = createIcon(<><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></>);
+export const Users = createIcon(<><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></>);
+export const UserPlus = createIcon(<><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="8.5" cy="7" r="4" /><line x1="20" y1="8" x2="20" y2="14" /><line x1="23" y1="11" x2="17" y2="11" /></>);
+export const UserMinus = createIcon(<><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="8.5" cy="7" r="4" /><line x1="23" y1="11" x2="17" y2="11" /></>);
 
-export const AlertCircle: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <circle cx="12" cy="12" r="10" />
-    <line x1="12" y1="8" x2="12" y2="12" />
-    <line x1="12" y1="16" x2="12.01" y2="16" />
-  </svg>
-);
+// Security
+export const Lock = createIcon(<><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></>);
+export const Unlock = createIcon(<><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 9.9-1" /></>);
+export const Key = createIcon(<path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />);
+export const Shield = createIcon(<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />);
+export const ShieldCheck = createIcon(<><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 12 12 15 22 5" /></>);
+export const Eye = createIcon(<><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></>);
+export const EyeOff = createIcon(<><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" /><line x1="1" y1="1" x2="23" y2="23" /></>);
 
-export const AlertTriangle: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-    <line x1="12" y1="9" x2="12" y2="13" />
-    <line x1="12" y1="17" x2="12.01" y2="17" />
-  </svg>
-);
+// Date & Time
+export const Calendar = createIcon(<><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></>);
+export const Clock = createIcon(<><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></>);
+export const Timer = createIcon(<><circle cx="12" cy="13" r="8" /><path d="M12 9v4l2 2" /><path d="M5 3L2 6" /><path d="M22 6l-3-3" /><line x1="12" y1="1" x2="12" y2="3" /></>);
 
-export const Info: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <circle cx="12" cy="12" r="10" />
-    <line x1="12" y1="16" x2="12" y2="12" />
-    <line x1="12" y1="8" x2="12.01" y2="8" />
-  </svg>
-);
+// Location
+export const Home = createIcon(<><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></>);
+export const MapPin = createIcon(<><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></>);
+export const Map = createIcon(<><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" /><line x1="8" y1="2" x2="8" y2="18" /><line x1="16" y1="6" x2="16" y2="22" /></>);
+export const Globe = createIcon(<><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></>);
+export const Navigation = createIcon(<polygon points="3 11 22 2 13 21 11 13 3 11" />);
+export const Compass = createIcon(<><circle cx="12" cy="12" r="10" /><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" /></>);
 
-export const Download: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-    <polyline points="7 10 12 15 17 10" />
-    <line x1="12" y1="15" x2="12" y2="3" />
-  </svg>
-);
+// Data & Analytics
+export const BarChart = createIcon(<><line x1="12" y1="20" x2="12" y2="10" /><line x1="18" y1="20" x2="18" y2="4" /><line x1="6" y1="20" x2="6" y2="16" /></>);
+export const BarChart2 = createIcon(<><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></>);
+export const PieChart = createIcon(<><path d="M21.21 15.89A10 10 0 1 1 8 2.83" /><path d="M22 12A10 10 0 0 0 12 2v10z" /></>);
+export const TrendingUp = createIcon(<><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></>);
+export const TrendingDown = createIcon(<><polyline points="23 18 13.5 8.5 8.5 13.5 1 6" /><polyline points="17 18 23 18 23 12" /></>);
+export const Activity = createIcon(<polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />);
+export const Percent = createIcon(<><line x1="19" y1="5" x2="5" y2="19" /><circle cx="6.5" cy="6.5" r="2.5" /><circle cx="17.5" cy="17.5" r="2.5" /></>);
 
-export const Upload: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-    <polyline points="17 8 12 3 7 8" />
-    <line x1="12" y1="3" x2="12" y2="15" />
-  </svg>
-);
+// Tech & Development
+export const Code = createIcon(<><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></>);
+export const Terminal = createIcon(<><polyline points="4 17 10 11 4 5" /><line x1="12" y1="19" x2="20" y2="19" /></>);
+export const Database = createIcon(<><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" /><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" /></>);
+export const Server = createIcon(<><rect x="2" y="2" width="20" height="8" rx="2" ry="2" /><rect x="2" y="14" width="20" height="8" rx="2" ry="2" /><line x1="6" y1="6" x2="6.01" y2="6" /><line x1="6" y1="18" x2="6.01" y2="18" /></>);
+export const Cpu = createIcon(<><rect x="4" y="4" width="16" height="16" rx="2" ry="2" /><rect x="9" y="9" width="6" height="6" /><line x1="9" y1="1" x2="9" y2="4" /><line x1="15" y1="1" x2="15" y2="4" /><line x1="9" y1="20" x2="9" y2="23" /><line x1="15" y1="20" x2="15" y2="23" /><line x1="20" y1="9" x2="23" y2="9" /><line x1="20" y1="14" x2="23" y2="14" /><line x1="1" y1="9" x2="4" y2="9" /><line x1="1" y1="14" x2="4" y2="14" /></>);
+export const HardDrive = createIcon(<><line x1="22" y1="12" x2="2" y2="12" /><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" /><line x1="6" y1="16" x2="6.01" y2="16" /><line x1="10" y1="16" x2="10.01" y2="16" /></>);
+export const Cloud = createIcon(<path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />);
+export const CloudUpload = createIcon(<><polyline points="16 16 12 12 8 16" /><line x1="12" y1="12" x2="12" y2="21" /><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" /></>);
+export const CloudDownload = createIcon(<><polyline points="8 17 12 21 16 17" /><line x1="12" y1="12" x2="12" y2="21" /><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29" /></>);
+export const Wifi = createIcon(<><path d="M5 12.55a11 11 0 0 1 14.08 0" /><path d="M1.42 9a16 16 0 0 1 21.16 0" /><path d="M8.53 16.11a6 6 0 0 1 6.95 0" /><line x1="12" y1="20" x2="12.01" y2="20" /></>);
+export const Bluetooth = createIcon(<polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5" />);
+export const GitBranch = createIcon(<><line x1="6" y1="3" x2="6" y2="15" /><circle cx="18" cy="6" r="3" /><circle cx="6" cy="18" r="3" /><path d="M18 9a9 9 0 0 1-9 9" /></>);
+export const GitCommit = createIcon(<><circle cx="12" cy="12" r="4" /><line x1="1.05" y1="12" x2="7" y2="12" /><line x1="17.01" y1="12" x2="22.96" y2="12" /></>);
+export const GitMerge = createIcon(<><circle cx="18" cy="18" r="3" /><circle cx="6" cy="6" r="3" /><path d="M6 21V9a9 9 0 0 0 9 9" /></>);
+export const GitPullRequest = createIcon(<><circle cx="18" cy="18" r="3" /><circle cx="6" cy="6" r="3" /><path d="M13 6h3a2 2 0 0 1 2 2v7" /><line x1="6" y1="9" x2="6" y2="21" /></>);
+export const Hash = createIcon(<><line x1="4" y1="9" x2="20" y2="9" /><line x1="4" y1="15" x2="20" y2="15" /><line x1="10" y1="3" x2="8" y2="21" /><line x1="16" y1="3" x2="14" y2="21" /></>);
+export const Tag = createIcon(<><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" /><line x1="7" y1="7" x2="7.01" y2="7" /></>);
 
-export const ExternalLink: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-    <polyline points="15 3 21 3 21 9" />
-    <line x1="10" y1="14" x2="21" y2="3" />
-  </svg>
-);
+// Media
+export const Image = createIcon(<><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></>);
+export const Camera = createIcon(<><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" /><circle cx="12" cy="13" r="4" /></>);
+export const Video = createIcon(<><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" /></>);
+export const Film = createIcon(<><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" /><line x1="7" y1="2" x2="7" y2="22" /><line x1="17" y1="2" x2="17" y2="22" /><line x1="2" y1="12" x2="22" y2="12" /><line x1="2" y1="7" x2="7" y2="7" /><line x1="2" y1="17" x2="7" y2="17" /><line x1="17" y1="17" x2="22" y2="17" /><line x1="17" y1="7" x2="22" y2="7" /></>);
+export const Music = createIcon(<><path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" /></>);
+export const Mic = createIcon(<><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" /><path d="M19 10v2a7 7 0 0 1-14 0v-2" /><line x1="12" y1="19" x2="12" y2="23" /><line x1="8" y1="23" x2="16" y2="23" /></>);
+export const Headphones = createIcon(<><path d="M3 18v-6a9 9 0 0 1 18 0v6" /><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" /></>);
+export const Volume = createIcon(<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />);
+export const Volume1 = createIcon(<><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" /><path d="M15.54 8.46a5 5 0 0 1 0 7.07" /></>);
+export const Volume2 = createIcon(<><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" /><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" /></>);
+export const VolumeX = createIcon(<><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" /><line x1="23" y1="9" x2="17" y2="15" /><line x1="17" y1="9" x2="23" y2="15" /></>);
+export const Play = createIcon(<polygon points="5 3 19 12 5 21 5 3" />);
+export const Pause = createIcon(<><rect x="6" y="4" width="4" height="16" /><rect x="14" y="4" width="4" height="16" /></>);
+export const SkipBack = createIcon(<><polygon points="19 20 9 12 19 4 19 20" /><line x1="5" y1="19" x2="5" y2="5" /></>);
+export const SkipForward = createIcon(<><polygon points="5 4 15 12 5 20 5 4" /><line x1="19" y1="5" x2="19" y2="19" /></>);
+export const Rewind = createIcon(<><polygon points="11 19 2 12 11 5 11 19" /><polygon points="22 19 13 12 22 5 22 19" /></>);
+export const FastForward = createIcon(<><polygon points="13 19 22 12 13 5 13 19" /><polygon points="2 19 11 12 2 5 2 19" /></>);
 
-export const Copy: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-  </svg>
-);
+// Weather
+export const Sun = createIcon(<><circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" /></>);
+export const Moon = createIcon(<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />);
+export const CloudRain = createIcon(<><line x1="16" y1="13" x2="16" y2="21" /><line x1="8" y1="13" x2="8" y2="21" /><line x1="12" y1="15" x2="12" y2="23" /><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" /></>);
+export const CloudSnow = createIcon(<><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25" /><line x1="8" y1="16" x2="8.01" y2="16" /><line x1="8" y1="20" x2="8.01" y2="20" /><line x1="12" y1="18" x2="12.01" y2="18" /><line x1="12" y1="22" x2="12.01" y2="22" /><line x1="16" y1="16" x2="16.01" y2="16" /><line x1="16" y1="20" x2="16.01" y2="20" /></>);
+export const Thermometer = createIcon(<path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" />);
+export const Wind = createIcon(<><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2" /></>);
+export const Droplet = createIcon(<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />);
+export const Umbrella = createIcon(<><path d="M23 12a11.05 11.05 0 0 0-22 0zm-5 7a3 3 0 0 1-6 0v-7" /></>);
 
-export const Box: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-    <line x1="12" y1="22.08" x2="12" y2="12" />
-  </svg>
-);
+// Objects
+export const Briefcase = createIcon(<><rect x="2" y="7" width="20" height="14" rx="2" ry="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></>);
+export const ShoppingCart = createIcon(<><circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" /><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" /></>);
+export const ShoppingBag = createIcon(<><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 0 1-8 0" /></>);
+export const CreditCard = createIcon(<><rect x="1" y="4" width="22" height="16" rx="2" ry="2" /><line x1="1" y1="10" x2="23" y2="10" /></>);
+export const DollarSign = createIcon(<><line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></>);
+export const Gift = createIcon(<><polyline points="20 12 20 22 4 22 4 12" /><rect x="2" y="7" width="20" height="5" /><line x1="12" y1="22" x2="12" y2="7" /><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" /><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" /></>);
+export const Truck = createIcon(<><rect x="1" y="3" width="15" height="13" /><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" /></>);
+export const Printer = createIcon(<><polyline points="6 9 6 2 18 2 18 9" /><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><rect x="6" y="14" width="12" height="8" /></>);
+export const Trash2 = createIcon(<><polyline points="3 6 5 6 21 6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /></>);
 
-export const Folder: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-  </svg>
-);
+// Misc
+export const Zap = createIcon(<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />);
+export const Coffee = createIcon(<><path d="M18 8h1a4 4 0 0 1 0 8h-1" /><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" /><line x1="6" y1="1" x2="6" y2="4" /><line x1="10" y1="1" x2="10" y2="4" /><line x1="14" y1="1" x2="14" y2="4" /></>);
+export const Feather = createIcon(<><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z" /><line x1="16" y1="8" x2="2" y2="22" /><line x1="17.5" y1="15" x2="9" y2="15" /></>);
+export const Award = createIcon(<><circle cx="12" cy="8" r="7" /><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" /></>);
+export const Target = createIcon(<><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></>);
+export const Flag = createIcon(<><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" /><line x1="4" y1="22" x2="4" y2="15" /></>);
+export const Anchor = createIcon(<><circle cx="12" cy="5" r="3" /><line x1="12" y1="22" x2="12" y2="8" /><path d="M5 12H2a10 10 0 0 0 20 0h-3" /></>);
+export const Scissors = createIcon(<><circle cx="6" cy="6" r="3" /><circle cx="6" cy="18" r="3" /><line x1="20" y1="4" x2="8.12" y2="15.88" /><line x1="14.47" y1="14.48" x2="20" y2="20" /><line x1="8.12" y1="8.12" x2="12" y2="12" /></>);
+export const Paperclip = createIcon(<path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />);
+export const Link = createIcon(<><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" /><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" /></>);
+export const Link2 = createIcon(<><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3" /><line x1="8" y1="12" x2="16" y2="12" /></>);
+export const Layers = createIcon(<><polygon points="12 2 2 7 12 12 22 7 12 2" /><polyline points="2 17 12 22 22 17" /><polyline points="2 12 12 17 22 12" /></>);
+export const Layout = createIcon(<><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><line x1="3" y1="9" x2="21" y2="9" /><line x1="9" y1="21" x2="9" y2="9" /></>);
+export const Grid = createIcon(<><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /></>);
+export const Sidebar = createIcon(<><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><line x1="9" y1="3" x2="9" y2="21" /></>);
+export const Table = createIcon(<path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18" />);
+export const List = createIcon(<><line x1="8" y1="6" x2="21" y2="6" /><line x1="8" y1="12" x2="21" y2="12" /><line x1="8" y1="18" x2="21" y2="18" /><line x1="3" y1="6" x2="3.01" y2="6" /><line x1="3" y1="12" x2="3.01" y2="12" /><line x1="3" y1="18" x2="3.01" y2="18" /></>);
+export const Filter = createIcon(<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />);
+export const Sliders = createIcon(<><line x1="4" y1="21" x2="4" y2="14" /><line x1="4" y1="10" x2="4" y2="3" /><line x1="12" y1="21" x2="12" y2="12" /><line x1="12" y1="8" x2="12" y2="3" /><line x1="20" y1="21" x2="20" y2="16" /><line x1="20" y1="12" x2="20" y2="3" /><line x1="1" y1="14" x2="7" y2="14" /><line x1="9" y1="8" x2="15" y2="8" /><line x1="17" y1="16" x2="23" y2="16" /></>);
+export const Power = createIcon(<><path d="M18.36 6.64a9 9 0 1 1-12.73 0" /><line x1="12" y1="2" x2="12" y2="12" /></>);
+export const Battery = createIcon(<><rect x="1" y="6" width="18" height="12" rx="2" ry="2" /><line x1="23" y1="13" x2="23" y2="11" /></>);
+export const Loader = createIcon(<><line x1="12" y1="2" x2="12" y2="6" /><line x1="12" y1="18" x2="12" y2="22" /><line x1="4.93" y1="4.93" x2="7.76" y2="7.76" /><line x1="16.24" y1="16.24" x2="19.07" y2="19.07" /><line x1="2" y1="12" x2="6" y2="12" /><line x1="18" y1="12" x2="22" y2="12" /><line x1="4.93" y1="19.07" x2="7.76" y2="16.24" /><line x1="16.24" y1="7.76" x2="19.07" y2="4.93" /></>);
+export const Command = createIcon(<path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />);
+export const Keyboard = createIcon(<><rect x="2" y="4" width="20" height="16" rx="2" ry="2" /><path d="M6 8h.001" /><path d="M10 8h.001" /><path d="M14 8h.001" /><path d="M18 8h.001" /><path d="M8 12h.001" /><path d="M12 12h.001" /><path d="M16 12h.001" /><path d="M7 16h10" /></>);
+export const Monitor = createIcon(<><rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></>);
+export const Smartphone = createIcon(<><rect x="5" y="2" width="14" height="20" rx="2" ry="2" /><line x1="12" y1="18" x2="12.01" y2="18" /></>);
+export const Tablet = createIcon(<><rect x="4" y="2" width="16" height="20" rx="2" ry="2" /><line x1="12" y1="18" x2="12.01" y2="18" /></>);
+export const Tv = createIcon(<><rect x="2" y="7" width="20" height="15" rx="2" ry="2" /><polyline points="17 2 12 7 7 2" /></>);
+export const Speaker = createIcon(<><rect x="4" y="2" width="16" height="20" rx="2" ry="2" /><circle cx="12" cy="14" r="4" /><line x1="12" y1="6" x2="12.01" y2="6" /></>);
+export const Radio = createIcon(<><circle cx="12" cy="12" r="2" /><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14" /></>);
 
-export const File: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-    <polyline points="14 2 14 8 20 8" />
-    <line x1="16" y1="13" x2="8" y2="13" />
-    <line x1="16" y1="17" x2="8" y2="17" />
-    <polyline points="10 9 9 9 8 9" />
-  </svg>
-);
+// Shapes & Symbols
+export const Hexagon = createIcon(<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />);
+export const Octagon = createIcon(<polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2" />);
+export const Triangle = createIcon(<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />);
+export const Smile = createIcon(<><circle cx="12" cy="12" r="10" /><path d="M8 14s1.5 2 4 2 4-2 4-2" /><line x1="9" y1="9" x2="9.01" y2="9" /><line x1="15" y1="9" x2="15.01" y2="9" /></>);
+export const Frown = createIcon(<><circle cx="12" cy="12" r="10" /><path d="M16 16s-1.5-2-4-2-4 2-4 2" /><line x1="9" y1="9" x2="9.01" y2="9" /><line x1="15" y1="9" x2="15.01" y2="9" /></>);
+export const Meh = createIcon(<><circle cx="12" cy="12" r="10" /><line x1="8" y1="15" x2="16" y2="15" /><line x1="9" y1="9" x2="9.01" y2="9" /><line x1="15" y1="9" x2="15.01" y2="9" /></>);
+export const ThumbsUp = createIcon(<><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" /></>);
+export const ThumbsDown = createIcon(<><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" /></>);
+export const Flame = createIcon(<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />);
+export const Leaf = createIcon(<><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" /></>);
+export const Snowflake = createIcon(<><line x1="12" y1="2" x2="12" y2="22" /><path d="M20 6L12 12 4 6" /><path d="M20 18L12 12 4 18" /><line x1="2" y1="12" x2="22" y2="12" /></>);
+export const Sparkles = createIcon(<><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" /><path d="M20 3v4" /><path d="M22 5h-4" /><path d="M4 17v2" /><path d="M5 18H3" /></>);
+export const Bolt = createIcon(<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />);
+export const Bug = createIcon(<><rect width="8" height="14" x="8" y="6" rx="4" /><path d="M19 7l-3 2" /><path d="M5 7l3 2" /><path d="M19 19l-3-2" /><path d="M5 19l3-2" /><path d="M20 13h-4" /><path d="M4 13h4" /><path d="M10 4l1 2" /><path d="M14 4l-1 2" /></>);
+export const Rocket = createIcon(<><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" /><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" /><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" /><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" /></>);
+export const Plane = createIcon(<path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />);
+export const Car = createIcon(<><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2" /><circle cx="6.5" cy="16.5" r="2.5" /><circle cx="16.5" cy="16.5" r="2.5" /></>);
+export const Ship = createIcon(<><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" /><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.9.94 5.34 2.81 7.76" /><path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6" /><path d="M12 10v4" /><path d="M12 2v3" /></>);
+export const Bike = createIcon(<><circle cx="5.5" cy="17.5" r="3.5" /><circle cx="18.5" cy="17.5" r="3.5" /><circle cx="15" cy="5" r="1" /><path d="M12 17.5V14l-3-3 4-3 2 3h2" /></>);
+export const Mountain = createIcon(<path d="M8 3l4 8 5-5 5 15H2L8 3z" />);
+export const Waves = createIcon(<><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" /><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" /><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" /></>);
+export const Trees = createIcon(<><path d="M10 10v.2A3 3 0 0 1 8.9 16H5l-1-9h5" /><path d="M14 10v.2a3 3 0 0 0 1.1 5.8H19l1-9h-5" /><path d="M12 19v3" /><path d="M12 13V2l3 3-3 3-3-3z" /></>);
+export const Flower = createIcon(<><path d="M12 7.5a4.5 4.5 0 1 1 4.5 4.5M12 7.5A4.5 4.5 0 1 0 7.5 12M12 7.5V9m-4.5 3a4.5 4.5 0 1 0 4.5 4.5M7.5 12H9m7.5 0a4.5 4.5 0 1 1-4.5 4.5m4.5-4.5H15m-3 4.5V15" /><circle cx="12" cy="12" r="3" /><path d="M12 22v-5.5" /></>);
+export const Apple = createIcon(<><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z" /><path d="M10 2c1 .5 2 2 2 5" /></>);
+export const Cake = createIcon(<><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8" /><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1" /><path d="M2 21h20" /><path d="M7 8v2" /><path d="M12 8v2" /><path d="M17 8v2" /><path d="M7 4h.01" /><path d="M12 4h.01" /><path d="M17 4h.01" /></>);
+export const Wine = createIcon(<><path d="M8 22h8" /><path d="M7 10h10" /><path d="M12 15v7" /><path d="M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z" /></>);
+export const PizzaSlice = createIcon(<><path d="M12 2L2 22h20L12 2Z" /><path d="M9 9l2.25 2.25L12 10l.75 1.25L15 9" /></>);
+export const Utensils = createIcon(<><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" /><path d="M7 2v20" /><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" /></>);
 
-export const Code: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <polyline points="16 18 22 12 16 6" />
-    <polyline points="8 6 2 12 8 18" />
-  </svg>
-);
-
-export const Tag: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
-    <line x1="7" y1="7" x2="7.01" y2="7" />
-  </svg>
-);
-
-export const Hash: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <line x1="4" y1="9" x2="20" y2="9" />
-    <line x1="4" y1="15" x2="20" y2="15" />
-    <line x1="10" y1="3" x2="8" y2="21" />
-    <line x1="16" y1="3" x2="14" y2="21" />
-  </svg>
-);
-
-export const Home: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-    <polyline points="9 22 9 12 15 12 15 22" />
-  </svg>
-);
-
-export const Briefcase: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-  </svg>
-);
-
-export const User: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-    <circle cx="12" cy="7" r="4" />
-  </svg>
-);
-
-export const Mail: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-    <polyline points="22,6 12,13 2,6" />
-  </svg>
-);
-
-export const MessageSquare: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-  </svg>
-);
-
-export const Calendar: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-    <line x1="16" y1="2" x2="16" y2="6" />
-    <line x1="8" y1="2" x2="8" y2="6" />
-    <line x1="3" y1="10" x2="21" y2="10" />
-  </svg>
-);
-
-export const Clock: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <circle cx="12" cy="12" r="10" />
-    <polyline points="12 6 12 12 16 14" />
-  </svg>
-);
-
-export const Link: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-  </svg>
-);
-
-export const Image: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-    <circle cx="8.5" cy="8.5" r="1.5" />
-    <polyline points="21 15 16 10 5 21" />
-  </svg>
-);
-
-export const Terminal: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <polyline points="4 17 10 11 4 5" />
-    <line x1="12" y1="19" x2="20" y2="19" />
-  </svg>
-);
-
-export const Database: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <ellipse cx="12" cy="5" rx="9" ry="3" />
-    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-  </svg>
-);
-
-export const Globe: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <circle cx="12" cy="12" r="10" />
-    <line x1="2" y1="12" x2="22" y2="12" />
-    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-  </svg>
-);
-
-export const Keyboard: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
-    <path d="M6 8h.001" />
-    <path d="M10 8h.001" />
-    <path d="M14 8h.001" />
-    <path d="M18 8h.001" />
-    <path d="M8 12h.001" />
-    <path d="M12 12h.001" />
-    <path d="M16 12h.001" />
-    <path d="M7 16h10" />
-  </svg>
-);
-
-export const Zap: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-  </svg>
-);
-
-export const Heart: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-  </svg>
-);
-
-export const Archive: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <polyline points="21 8 21 21 3 21 3 8" />
-    <rect x="1" y="3" width="22" height="5" />
-    <line x1="10" y1="12" x2="14" y2="12" />
-  </svg>
-);
-
-export const Bookmark: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-  </svg>
-);
-
-export const Table: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18" />
-  </svg>
-);
-
-export const List: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <line x1="8" y1="6" x2="21" y2="6" />
-    <line x1="8" y1="12" x2="21" y2="12" />
-    <line x1="8" y1="18" x2="21" y2="18" />
-    <line x1="3" y1="6" x2="3.01" y2="6" />
-    <line x1="3" y1="12" x2="3.01" y2="12" />
-    <line x1="3" y1="18" x2="3.01" y2="18" />
-  </svg>
-);
-
-export const Layers: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <polygon points="12 2 2 7 12 12 22 7 12 2" />
-    <polyline points="2 17 12 22 22 17" />
-    <polyline points="2 12 12 17 22 12" />
-  </svg>
-);
-
-export const Shield: React.FC<IconProps> = ({ size = 24, className }) => (
-  <svg {...defaultProps} width={size} height={size} viewBox="0 0 24 24" className={className}>
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-  </svg>
-);
+// Building & Places
+export const Building = createIcon(<><rect width="16" height="20" x="4" y="2" rx="2" ry="2" /><path d="M9 22v-4h6v4" /><path d="M8 6h.01" /><path d="M16 6h.01" /><path d="M12 6h.01" /><path d="M12 10h.01" /><path d="M12 14h.01" /><path d="M16 10h.01" /><path d="M16 14h.01" /><path d="M8 10h.01" /><path d="M8 14h.01" /></>);
+export const Hotel = createIcon(<><path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Z" /><path d="M8 6h.01" /><path d="M16 6h.01" /><path d="M12 6h.01" /><path d="M12 10h.01" /><path d="M8 10h.01" /><path d="M16 10h.01" /><path d="M12 14h.01" /><path d="M8 14h.01" /><path d="M16 14h.01" /><path d="M10 18h4" /></>);
+export const Store = createIcon(<><path d="M2 7l4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" /><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" /><path d="M2 7h20" /><path d="M22 7v3a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7" /></>);
+export const School = createIcon(<><path d="M14 22v-4a2 2 0 1 0-4 0v4" /><path d="m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10" /><path d="M18 5v17" /><path d="M6 5v17" /><path d="M12 2v20" /><path d="M4 10h16" /></>);
+export const Hospital = createIcon(<><path d="M12 6v4" /><path d="M14 14h-4" /><path d="M14 18h-4" /><path d="M14 8h-4" /><path d="M18 12h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2" /><path d="M18 22V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v18" /></>);
 
 // Icon map for dynamic icon rendering
 export const ICON_MAP: Record<string, React.FC<IconProps>> = {
   plus: Plus,
   x: X,
-  settings: Settings,
-  search: Search,
-  clipboard: Clipboard,
-  edit: Edit,
-  trash: Trash,
-  pin: Pin,
-  'grip-vertical': GripVertical,
+  check: Check,
+  minus: Minus,
   'chevron-left': ChevronLeft,
   'chevron-right': ChevronRight,
+  'chevron-up': ChevronUp,
+  'chevron-down': ChevronDown,
+  'chevrons-left': ChevronsLeft,
+  'chevrons-right': ChevronsRight,
+  'arrow-up': ArrowUp,
+  'arrow-down': ArrowDown,
+  'arrow-left': ArrowLeft,
+  'arrow-right': ArrowRight,
+  settings: Settings,
+  search: Search,
+  edit: Edit,
+  trash: Trash,
+  download: Download,
+  upload: Upload,
+  copy: Copy,
+  clipboard: Clipboard,
+  'refresh-cw': RefreshCw,
+  'rotate-ccw': RotateCcw,
+  'external-link': ExternalLink,
+  share: Share,
+  pin: Pin,
   star: Star,
+  heart: Heart,
+  bookmark: Bookmark,
   circle: Circle,
+  'grip-vertical': GripVertical,
   'more-vertical': MoreVertical,
-  minus: Minus,
+  'more-horizontal': MoreHorizontal,
+  menu: Menu,
   square: Square,
+  'check-square': CheckSquare,
   'maximize-2': Maximize2,
   'minimize-2': Minimize2,
-  check: Check,
+  maximize: Maximize,
+  minimize: Minimize,
   'alert-circle': AlertCircle,
   'alert-triangle': AlertTriangle,
   info: Info,
-  download: Download,
-  upload: Upload,
-  'external-link': ExternalLink,
-  copy: Copy,
+  'help-circle': HelpCircle,
+  'check-circle': CheckCircle,
+  'x-circle': XCircle,
   box: Box,
   folder: Folder,
+  'folder-open': FolderOpen,
+  'folder-plus': FolderPlus,
   file: File,
-  code: Code,
-  tag: Tag,
-  hash: Hash,
-  home: Home,
-  briefcase: Briefcase,
-  user: User,
+  'file-plus': FilePlus,
+  'file-text': FileText,
+  archive: Archive,
+  package: Package,
   mail: Mail,
   'message-square': MessageSquare,
+  'message-circle': MessageCircle,
+  send: Send,
+  inbox: Inbox,
+  bell: Bell,
+  'bell-off': BellOff,
+  phone: Phone,
+  user: User,
+  users: Users,
+  'user-plus': UserPlus,
+  'user-minus': UserMinus,
+  lock: Lock,
+  unlock: Unlock,
+  key: Key,
+  shield: Shield,
+  'shield-check': ShieldCheck,
+  eye: Eye,
+  'eye-off': EyeOff,
   calendar: Calendar,
   clock: Clock,
-  link: Link,
-  image: Image,
+  timer: Timer,
+  home: Home,
+  'map-pin': MapPin,
+  map: Map,
+  globe: Globe,
+  navigation: Navigation,
+  compass: Compass,
+  'bar-chart': BarChart,
+  'bar-chart-2': BarChart2,
+  'pie-chart': PieChart,
+  'trending-up': TrendingUp,
+  'trending-down': TrendingDown,
+  activity: Activity,
+  percent: Percent,
+  code: Code,
   terminal: Terminal,
   database: Database,
-  globe: Globe,
-  keyboard: Keyboard,
+  server: Server,
+  cpu: Cpu,
+  'hard-drive': HardDrive,
+  cloud: Cloud,
+  'cloud-upload': CloudUpload,
+  'cloud-download': CloudDownload,
+  wifi: Wifi,
+  bluetooth: Bluetooth,
+  'git-branch': GitBranch,
+  'git-commit': GitCommit,
+  'git-merge': GitMerge,
+  'git-pull-request': GitPullRequest,
+  hash: Hash,
+  tag: Tag,
+  image: Image,
+  camera: Camera,
+  video: Video,
+  film: Film,
+  music: Music,
+  mic: Mic,
+  headphones: Headphones,
+  volume: Volume,
+  'volume-1': Volume1,
+  'volume-2': Volume2,
+  'volume-x': VolumeX,
+  play: Play,
+  pause: Pause,
+  'skip-back': SkipBack,
+  'skip-forward': SkipForward,
+  rewind: Rewind,
+  'fast-forward': FastForward,
+  sun: Sun,
+  moon: Moon,
+  'cloud-rain': CloudRain,
+  'cloud-snow': CloudSnow,
+  thermometer: Thermometer,
+  wind: Wind,
+  droplet: Droplet,
+  umbrella: Umbrella,
+  briefcase: Briefcase,
+  'shopping-cart': ShoppingCart,
+  'shopping-bag': ShoppingBag,
+  'credit-card': CreditCard,
+  'dollar-sign': DollarSign,
+  gift: Gift,
+  truck: Truck,
+  printer: Printer,
+  'trash-2': Trash2,
   zap: Zap,
-  heart: Heart,
-  archive: Archive,
-  bookmark: Bookmark,
+  coffee: Coffee,
+  feather: Feather,
+  award: Award,
+  target: Target,
+  flag: Flag,
+  anchor: Anchor,
+  scissors: Scissors,
+  paperclip: Paperclip,
+  link: Link,
+  'link-2': Link2,
+  layers: Layers,
+  layout: Layout,
+  grid: Grid,
+  sidebar: Sidebar,
   table: Table,
   list: List,
-  layers: Layers,
-  shield: Shield,
+  filter: Filter,
+  sliders: Sliders,
+  power: Power,
+  battery: Battery,
+  loader: Loader,
+  command: Command,
+  keyboard: Keyboard,
+  monitor: Monitor,
+  smartphone: Smartphone,
+  tablet: Tablet,
+  tv: Tv,
+  speaker: Speaker,
+  radio: Radio,
+  hexagon: Hexagon,
+  octagon: Octagon,
+  triangle: Triangle,
+  smile: Smile,
+  frown: Frown,
+  meh: Meh,
+  'thumbs-up': ThumbsUp,
+  'thumbs-down': ThumbsDown,
+  flame: Flame,
+  leaf: Leaf,
+  snowflake: Snowflake,
+  sparkles: Sparkles,
+  bolt: Bolt,
+  bug: Bug,
+  rocket: Rocket,
+  plane: Plane,
+  car: Car,
+  ship: Ship,
+  bike: Bike,
+  mountain: Mountain,
+  waves: Waves,
+  trees: Trees,
+  flower: Flower,
+  apple: Apple,
+  cake: Cake,
+  wine: Wine,
+  'pizza-slice': PizzaSlice,
+  utensils: Utensils,
+  building: Building,
+  hotel: Hotel,
+  store: Store,
+  school: School,
+  hospital: Hospital,
 };
 
 export const AVAILABLE_ICONS = Object.keys(ICON_MAP);
 
 interface DynamicIconProps extends IconProps {
   name: string;
-  filled?: boolean;
 }
 
 export const DynamicIcon: React.FC<DynamicIconProps> = ({ name, ...props }) => {
@@ -482,4 +520,213 @@ export const DynamicIcon: React.FC<DynamicIconProps> = ({ name, ...props }) => {
     return <Box {...props} />;
   }
   return <IconComponent {...props} />;
+};
+
+// Icon namespace for easy access (as object with component properties)
+export const Icon = {
+  Plus,
+  X,
+  Check,
+  Minus,
+  ChevronLeft,
+  ChevronRight,
+  ChevronUp,
+  ChevronDown,
+  ChevronsLeft,
+  ChevronsRight,
+  ArrowUp,
+  ArrowDown,
+  ArrowLeft,
+  ArrowRight,
+  Settings,
+  Search,
+  Edit,
+  Trash,
+  Download,
+  Upload,
+  Copy,
+  Clipboard,
+  RefreshCw,
+  RotateCcw,
+  ExternalLink,
+  Share,
+  Pin,
+  Star,
+  Heart,
+  Bookmark,
+  Circle,
+  GripVertical,
+  MoreVertical,
+  MoreHorizontal,
+  Menu,
+  Square,
+  CheckSquare,
+  Maximize2,
+  Minimize2,
+  Maximize,
+  Minimize,
+  AlertCircle,
+  AlertTriangle,
+  Info,
+  HelpCircle,
+  CheckCircle,
+  XCircle,
+  Box,
+  Folder,
+  FolderOpen,
+  FolderPlus,
+  File,
+  FilePlus,
+  FileText,
+  Archive,
+  Package,
+  Mail,
+  MessageSquare,
+  MessageCircle,
+  Send,
+  Inbox,
+  Bell,
+  BellOff,
+  Phone,
+  User,
+  Users,
+  UserPlus,
+  UserMinus,
+  Lock,
+  Unlock,
+  Key,
+  Shield,
+  ShieldCheck,
+  Eye,
+  EyeOff,
+  Calendar,
+  Clock,
+  Timer,
+  Home,
+  MapPin,
+  Map,
+  Globe,
+  Navigation,
+  Compass,
+  BarChart,
+  BarChart2,
+  PieChart,
+  TrendingUp,
+  TrendingDown,
+  Activity,
+  Percent,
+  Code,
+  Terminal,
+  Database,
+  Server,
+  Cpu,
+  HardDrive,
+  Cloud,
+  CloudUpload,
+  CloudDownload,
+  Wifi,
+  Bluetooth,
+  GitBranch,
+  GitCommit,
+  GitMerge,
+  GitPullRequest,
+  Hash,
+  Tag,
+  Image,
+  Camera,
+  Video,
+  Film,
+  Music,
+  Mic,
+  Headphones,
+  Volume,
+  Volume1,
+  Volume2,
+  VolumeX,
+  Play,
+  Pause,
+  SkipBack,
+  SkipForward,
+  Rewind,
+  FastForward,
+  Sun,
+  Moon,
+  CloudRain,
+  CloudSnow,
+  Thermometer,
+  Wind,
+  Droplet,
+  Umbrella,
+  Briefcase,
+  ShoppingCart,
+  ShoppingBag,
+  CreditCard,
+  DollarSign,
+  Gift,
+  Truck,
+  Printer,
+  Trash2,
+  Zap,
+  Coffee,
+  Feather,
+  Award,
+  Target,
+  Flag,
+  Anchor,
+  Scissors,
+  Paperclip,
+  Link,
+  Link2,
+  Layers,
+  Layout,
+  Grid,
+  Sidebar,
+  Table,
+  List,
+  Filter,
+  Sliders,
+  Power,
+  Battery,
+  Loader,
+  Command,
+  Keyboard,
+  Monitor,
+  Smartphone,
+  Tablet,
+  Tv,
+  Speaker,
+  Radio,
+  Hexagon,
+  Octagon,
+  Triangle,
+  Smile,
+  Frown,
+  Meh,
+  ThumbsUp,
+  ThumbsDown,
+  Flame,
+  Leaf,
+  Snowflake,
+  Sparkles,
+  Bolt,
+  Bug,
+  Rocket,
+  Plane,
+  Car,
+  Ship,
+  Bike,
+  Mountain,
+  Waves,
+  Trees,
+  Flower,
+  Apple,
+  Cake,
+  Wine,
+  PizzaSlice,
+  Utensils,
+  Building,
+  Hotel,
+  Store,
+  School,
+  Hospital,
 };

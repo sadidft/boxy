@@ -36,7 +36,9 @@ type AppAction =
   | { type: 'REDO' }
   | { type: 'CLEAR_HISTORY' }
   | { type: 'IMPORT_FULL'; payload: { settings: Settings; boxes: Box[]; tabs: Tab[]; cards: Card[]; allTags: string[] } }
-  | { type: 'IMPORT_BOX'; payload: { box: Box; tabs: Tab[]; cards: Card[] } };
+  | { type: 'IMPORT_BOX'; payload: { box: Box; tabs: Tab[]; cards: Card[] } }
+  | { type: 'TOGGLE_MINIMIZE_BOX'; payload: string }
+  | { type: 'TOGGLE_MAXIMIZE_BOX'; payload: string };
 
 // Initial context value
 interface AppContextValue {
@@ -101,6 +103,8 @@ function appReducer(state: AppState, action: AppAction): AppState {
         order: state.boxes.length,
         createdAt: now,
         updatedAt: now,
+        isMinimized: action.payload.isMinimized ?? false,
+        isMaximized: action.payload.isMaximized ?? false,
       };
       
       const newAction: Action = {
@@ -646,6 +650,36 @@ function appReducer(state: AppState, action: AppAction): AppState {
         allTags: [...state.allTags, ...newTags],
         activeBoxId: action.payload.box.id,
         activeTabId: action.payload.tabs[0]?.id || null,
+      };
+    }
+
+    case 'TOGGLE_MINIMIZE_BOX': {
+      const boxId = action.payload;
+      return {
+        ...state,
+        boxes: state.boxes.map(box =>
+          box.id === boxId
+            ? { ...box, isMinimized: !box.isMinimized, isMaximized: false }
+            : box
+        ),
+      };
+    }
+
+    case 'TOGGLE_MAXIMIZE_BOX': {
+      const boxId = action.payload;
+      const box = state.boxes.find(b => b.id === boxId);
+      if (!box) return state;
+      
+      const isCurrentlyMaximized = box.isMaximized;
+      
+      return {
+        ...state,
+        boxes: state.boxes.map(b =>
+          b.id === boxId
+            ? { ...b, isMaximized: !isCurrentlyMaximized, isMinimized: false }
+            : { ...b, isMaximized: false } // Unmaximize all others
+        ),
+        activeBoxId: boxId,
       };
     }
 

@@ -1,10 +1,10 @@
 /**
  * Boxy Card Item Component
- * Individual card display with actions
+ * Individual card display with actions and table rendering
  */
 
 import React, { useCallback, useMemo } from 'react';
-import type { Card } from '@/types';
+import type { Card, TableData, HistoryEntry } from '@/types';
 import { useApp, useModal, useToast } from '@/store/AppContext';
 import { 
   GripVertical, 
@@ -17,6 +17,7 @@ import { cn } from '@/utils/cn';
 import { parseMarkdown } from '@/utils/markdown';
 import { formatRelativeTime, formatHistoryTimestamp } from '@/utils/helpers';
 import { hasCustomVariables, getCustomVariables, processContentForCopy } from '@/utils/variables';
+import { evaluateFormula, isFormula } from '@/utils/formula';
 
 interface CardItemProps {
   card: Card;
@@ -26,6 +27,189 @@ interface CardItemProps {
   onDragStart: (cardId: string) => void;
   onDragEnd: () => void;
   onDrop: (targetCardId: string) => void;
+}
+
+/**
+ * Renders history table showing last 4 card activity entries
+ */
+function HistoryTable({ history }: { history: HistoryEntry[] }) {
+  // Show last 4 entries, most recent first
+  const entries = [...history].reverse().slice(0, 4);
+  const hasMore = history.length > 4;
+
+  if (entries.length === 0) {
+    return (
+      <div className="text-xs text-[var(--text-tertiary)] italic">
+        No history yet
+      </div>
+    );
+  }
+
+  return (
+    <div className="overflow-hidden rounded border border-[var(--border-primary)]">
+      <table className="w-full text-xs">
+        <thead>
+          <tr className="bg-[var(--bg-tertiary)]">
+            <th className="py-1.5 px-2 text-left font-medium text-[var(--text-secondary)]">
+              Timestamp
+            </th>
+            <th className="py-1.5 px-2 text-left font-medium text-[var(--text-secondary)]">
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {entries.map((entry, i) => (
+            <tr 
+              key={`${entry.timestamp}-${i}`} 
+              className="border-t border-[var(--border-primary)]"
+            >
+              <td className="py-1.5 px-2 text-[var(--text-tertiary)] font-mono">
+                {formatHistoryTimestamp(entry.timestamp)}
+              </td>
+              <td className="py-1.5 px-2 text-[var(--text-secondary)] capitalize">
+                {entry.action}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {hasMore && (
+        <div className="py-1 px-2 text-xs text-[var(--text-tertiary)] bg-[var(--bg-tertiary)] border-t border-[var(--border-primary)]">
+          +{history.length - 4} more entries
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Renders custom table with formula evaluation
+ */
+function CustomTable({ table }: { table: TableData }) {
+  const { columns, rows } = table;
+  
+  // Sort columns and rows by order
+  const sortedColumns = [...columns].sort((a, b) => a.order - b.order);
+  const sortedRows = [...rows].sort((a, b) => a.order - b.order);
+  
+  // Show max 4 rows in preview
+  const displayRows = sortedRows.slice(0, 4);
+  const hasMore = sortedRows.length > 4;
+
+  if (sortedColumns.length === 0) {
+    return (
+      <div className="text-xs text-[var(--text-tertiary)] italic">
+        Empty table
+      </div>
+    );
+  }
+
+  /**
+   * Get cell value, evaluating formulas if needed
+   */
+  const getCellValue = (rowIndex: number, columnId: string): { value: string; isFormula: boolean; formula: string } => {
+    const row = sortedRows[rowIndex];
+    const cellValue = row?.cells[columnId] || '';
+    
+    if (isFormula(cellValue)) {
+      // Collect all values above this row in the same column
+      const columnValues: string[] = [];
+      for (let i = 0; i < rowIndex; i++) {
+        const val = sortedRows[i]?.cells[columnId] || '';
+        // Don't include formula cells in the calculation values
+        if (!isFormula(val)) {
+          columnValues.push(val);
+        }
+      }
+      
+      const result = evaluateFormula(cellValue, columnValues);
+      return { value: result, isFormula: true, formula: cellValue };
+    }
+    
+    return { value: cellValue, isFormula: false, formula: '' };
+  };
+
+  return (
+    <div className="overflow-hidden rounded border border-[var(--border-primary)]">
+      <div className="overflow-x-auto">
+        <table className="w-full text-xs">
+          <thead>
+            <tr className="bg-[var(--bg-tertiary)]">
+              {sortedColumns.map(col => (
+                <th 
+                  key={col.id}
+                  className="py-1.5 px-2 text-left font-medium text-[var(--text-secondary)] whitespace-nowrap"
+                >
+                  {col.name || 'Untitled'}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {displayRows.map((row, rowIndex) => (
+              <tr 
+                key={row.id}
+                className="border-t border-[var(--border-primary)]"
+              >
+                {sortedColumns.map(col => {
+                  const { value, isFormula: isFormulaCell, formula } = getCellValue(rowIndex, col.id);
+                  
+                  return (
+                    <td 
+                      key={col.id}
+                      className={cn(
+                        "py-1.5 px-2 whitespace-nowrap",
+                        isFormulaCell 
+                          ? "text-[var(--primary)] font-medium"
+                          : "text-[var(--text-secondary)]"
+                      )}
+                      title={isFormulaCell ? `Formula: ${formula}` : undefined}
+                    >
+                      <div className="flex flex-col">
+                        <span>{value || '—'}</span>
+                        {isFormulaCell && (
+                          <span className="text-[10px] text-[var(--text-tertiary)] font-mono opacity-60">
+                            {formula}
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {hasMore && (
+        <div className="py-1 px-2 text-xs text-[var(--text-tertiary)] bg-[var(--bg-tertiary)] border-t border-[var(--border-primary)]">
+          +{sortedRows.length - 4} more rows
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Card table display component - renders either history or custom table
+ */
+function CardTableDisplay({ card }: { card: Card }) {
+  if (!card.table) return null;
+
+  return (
+    <div className="px-3 pb-2">
+      <div className="text-xs text-[var(--text-tertiary)] mb-1.5 flex items-center gap-1">
+        <span>📊</span>
+        <span>{card.table.mode === 'history' ? 'History' : 'Table'}</span>
+      </div>
+      {card.table.mode === 'history' ? (
+        <HistoryTable history={card.history} />
+      ) : (
+        <CustomTable table={card.table} />
+      )}
+    </div>
+  );
 }
 
 export function CardItem({ 
@@ -47,7 +231,7 @@ export function CardItem({
     
     // Highlight search matches
     if (searchQuery) {
-      const regex = new RegExp(`(${searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      const regex = new RegExp(`(${searchQuery.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&')})`, 'gi');
       html = html.replace(regex, '<mark class="bg-yellow-300/30 text-inherit">$1</mark>');
     }
     
@@ -109,6 +293,9 @@ export function CardItem({
     e.preventDefault();
     onDrop(card.id);
   }, [card.id, onDrop]);
+
+  // Check if table should be displayed
+  const showTable = card.table && state.settings.features.tableInCards;
 
   return (
     <div
@@ -183,25 +370,8 @@ export function CardItem({
         </div>
       )}
 
-      {/* Table preview (history mode) */}
-      {card.table?.mode === 'history' && state.settings.features.tableInCards && card.history.length > 0 && (
-        <div className="px-3 pb-2">
-          <table className="w-full text-xs">
-            <tbody>
-              {card.history.slice(-3).map((entry, i) => (
-                <tr key={i} className="border-b border-[var(--border-primary)] last:border-b-0">
-                  <td className="py-1 text-[var(--text-tertiary)]">
-                    {formatHistoryTimestamp(entry.timestamp)}
-                  </td>
-                  <td className="py-1 text-[var(--text-secondary)] capitalize">
-                    {entry.action}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+      {/* Table Display (History or Custom) */}
+      {showTable && <CardTableDisplay card={card} />}
 
       {/* Actions */}
       <div className="flex items-center gap-1 p-2 border-t border-[var(--border-primary)] mt-auto">

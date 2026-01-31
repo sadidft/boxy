@@ -7,9 +7,7 @@
 
 import { useEffect } from 'react';
 import { AppProvider, useApp } from '@/store/AppContext';
-import { TabBar } from '@/components/layout/TabBar';
-import { AddressBar } from '@/components/layout/AddressBar';
-import { CardGrid } from '@/components/cards/CardGrid';
+import { MultiBoxView } from '@/components/layout/BoxContainer';
 import { ModalController } from '@/components/modals/ModalController';
 import { ToastContainer } from '@/components/ui/Toast';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
@@ -60,16 +58,13 @@ function AppContent() {
 
   return (
     <div className="h-full flex flex-col bg-[var(--bg-main)]">
-      {/* Tab Bar */}
-      <TabBar />
-      
-      {/* Address Bar */}
-      <AddressBar />
-      
-      {/* Main Content */}
-      <main className="flex-1 flex flex-col overflow-hidden">
-        <CardGrid />
-      </main>
+      {/* Always use MultiBoxView - it handles all box states:
+          - Single box (renders full UI)
+          - Multiple boxes (renders stacked view)
+          - Minimized boxes (renders collapsed bar)
+          - Maximized box (renders only that box full screen)
+      */}
+      <MultiBoxView />
       
       {/* Modals */}
       <ModalController />
