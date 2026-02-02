@@ -1,498 +1,308 @@
-# Boxy - Your Offline Clipboard Manager
+# Boxy
 
-![Boxy Logo](https://img.shields.io/badge/Boxy-1.0.23-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Offline](https://img.shields.io/badge/100%25-Offline-red)
-![Size](https://img.shields.io/badge/Single%20File-~300KB-purple)
+<p align="center">
+  <img src="public/logo.svg" alt="Boxy Logo" width="120" height="120">
+</p>
 
-**Boxy** adalah aplikasi manajemen clipboard berbasis Markdown yang berjalan 100% offline dalam satu file HTML. Dirancang untuk power users, developers, dan penulis teknis yang membutuhkan akses cepat ke snippet dan teks yang sering digunakan.
+<p align="center">
+  <strong>Your Offline Clipboard Manager</strong>
+</p>
 
----
+<p align="center">
+  <a href="#features">Features</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#keyboard-shortcuts">Shortcuts</a> •
+  <a href="#tech-stack">Tech Stack</a> •
+  <a href="#license">License</a>
+</p>
 
-## 🚀 Fitur Utama
-
-### 📁 Hierarki Organisasi yang Intuitif
-```
-BOXY = Lemari Arsip Digital
-│
-├── BOX = Profil / Workspace (seperti Chrome Profile)
-│   │
-│   ├── TAB = Kategori dalam profil (seperti Chrome Tab)
-│   │   │
-│   │   ├── CARD = Konten/Snippet
-│   │   ├── CARD
-│   │   └── CARD
-│   │
-│   ├── TAB
-│   └── TAB
-│
-├── BOX
-└── BOX
-```
-
-### ✨ Fitur Unggulan
-- **100% Offline** - Semua data disimpan di `localStorage` browser Anda
-- **Single File** - Seluruh aplikasi dalam 1 file HTML (~300KB)
-- **Zero Dependencies** - Murni Vanilla JS, CSS3, HTML5
-- **Privacy by Design** - Data tidak pernah keluar dari browser Anda
-- **Chrome-like UI** - 89% mirip Chrome browser untuk familiarity maksimal
-- **Keyboard-First UX** - Shortcut keyboard untuk semua aksi utama
+<p align="center">
+  <img src="https://img.shields.io/badge/version-1.0.23-blue.svg" alt="Version">
+  <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License">
+  <img src="https://img.shields.io/badge/PWA-ready-blueviolet.svg" alt="PWA Ready">
+  <img src="https://img.shields.io/badge/offline-100%25-success.svg" alt="Offline">
+</p>
 
 ---
 
-## 🎨 UI & UX
+## 🎯 What is Boxy?
 
-### Tampilan Utama
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                                                                             │
-│  ┌─────────────────────────────────────────────────────────┬─────────────┐  │
-│  │                        TAB BAR                          │   WINDOW    │  │
-│  │  [icon Tab1] [icon Tab2] [icon Tab3] [icon Tab4] [+]   │   CONTROLS  │  │
-│  │                                                         │  [—] [□] [×]│  │
-│  └─────────────────────────────────────────────────────────┴─────────────┘  │
-│                                                                             │
-│  ┌───────────────────────────────────────────────────────────────────────┐  │
-│  │                          ADDRESS BAR                                  │  │
-│  │  [◄] [►]  │  Box Name > Tab Name          │  [⭐]  [●]  [⋮]         │  │
-│  │           │  🔍 Search cards...            │                          │  │
-│  └───────────────────────────────────────────────────────────────────────┘  │
-│                                                                             │
-│  ┌───────────────────────────────────────────────────────────────────────┐  │
-│  │                                                                       │  │
-│  │                         CONTENT AREA                                  │  │
-│  │                        (Cards Grid - Masonry)                         │  │
-│  │                                                                       │  │
-│  │                                                                       │  │
-│  └───────────────────────────────────────────────────────────────────────┘  │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+**Boxy** is a powerful, offline-first clipboard manager built for power users. It helps you organize text snippets, code templates, and canned responses in a hierarchical structure that's always available—even without an internet connection.
 
-### Sistem Tema
-- **Dark Mode** (Default) - Warna gelap yang nyaman di mata
-- **Light Mode** - Alternatif terang
-- **System Detection** - Otomatis mengikuti tema sistem operasi
+### Why Boxy?
 
-### Responsive Design
-- **Mobile** (< 640px) - 1 kolom kartu
-- **Tablet** (640-1024px) - 2 kolom kartu
-- **Desktop** (1024-1440px) - 3 kolom kartu
-- **Wide** (> 1440px) - 4 kolom kartu
+- 🔒 **100% Offline** - Your data never leaves your device. Complete privacy guaranteed.
+- ⚡ **Lightning Fast** - Zero network latency. Everything runs locally in your browser.
+- 📝 **Markdown Ready** - Full Markdown support for rich text formatting.
+- 🎨 **Chrome-like UI** - Familiar tab-based interface that feels native.
+- ⌨️ **Keyboard First** - Complete keyboard navigation for power users.
+- 📱 **PWA Support** - Install as a standalone app on any device.
 
 ---
 
-## 🃏 Sistem Kartu (Cards)
+## ✨ Features
 
-### Anatomi Kartu
+### 📦 Hierarchical Organization
+
+Boxy uses a three-level hierarchy to organize your content:
+
 ```
-┌────────────────────────────────────────────────────────────────┐
-│                                                                │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │ [drag]  Email Template                            [pin] │  │ ← HEADER
-│  └──────────────────────────────────────────────────────────┘  │
-│                                                                │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │ Dear {{name}},                                          │  │ ← CONTENT
-│  │ Thank you for **reaching out**.                         │  │   (markdown)
-│  └──────────────────────────────────────────────────────────┘  │
-│                                                                │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │ [#work]  [#email]  [#template]                          │  │ ← TAGS
-│  └──────────────────────────────────────────────────────────┘  │
-│                                                                │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │ [Copy] [Edit] [Delete]                                  │  │ ← ACTIONS
-│  │ 42× copied • 2 hours ago                                │  │ ← STATS
-│  └──────────────────────────────────────────────────────────┘  │
-│                                                                │
-└────────────────────────────────────────────────────────────────┘
+📦 Box (Workspace)
+ └── 📁 Tab (Category)
+      └── 📄 Card (Content)
 ```
 
-### Fitur Kartu
-- **Markdown Support** - Format teks lengkap
-- **Variable Templates** - `{{name}}`, `{{date}}`, `{{clipboard}}`, dll
-- **Tabel dalam Kartu** - Mode history otomatis atau custom table
-- **Formula** - `sum//all`, `avg//3`, `mnt//2`, dll
-- **Pin System** - Kartu penting selalu di atas
-- **Drag & Drop** - Urutkan kartu dengan drag
-- **Copy Count** - Lacak berapa kali dicopy
-- **History** - Catat perubahan (max 4 entri)
+- **Boxes**: Top-level containers like "Work", "Personal", or "Projects"
+- **Tabs**: Categories within a box, like folders
+- **Cards**: Individual snippets with Markdown content
+
+### 🎯 Core Features
+
+| Feature | Description |
+|---------|-------------|
+| **One-Click Copy** | Copy card content instantly with a single click |
+| **Template Variables** | Use `{{name}}`, `{{date}}`, `{{time}}` for dynamic content |
+| **Custom Variables** | Define your own variables that prompt for input when copying |
+| **Search & Filter** | Find cards by text or filter by tags |
+| **Tag System** | Organize cards with tags for easy discovery |
+| **Pin Cards/Tabs** | Keep important items at the top |
+| **Undo/Redo** | 7-step undo history for all actions |
+| **Export/Import** | Backup and restore your data as JSON |
+| **Dark/Light Theme** | System-aware theme with manual override |
+| **Multi-Box View** | View multiple boxes simultaneously |
+
+### 📊 Table Support
+
+Cards can include tables with two modes:
+
+1. **History Table**: Auto-records when a card was created, edited, or copied
+2. **Custom Table**: Create your own tables with formula support
+
+### 🧮 Formula System
+
+Custom tables support powerful formulas:
+
+| Category | Formulas |
+|----------|----------|
+| **Numeric** | `sum//all`, `avg//3`, `max//all`, `min//all`, `cnt//all`, `diff//1` |
+| **Time** | `mnt//all`, `hrs//all`, `dur//all` (smart duration) |
+| **Date** | `days//all`, `weeks//all` |
+| **Special** | `last//1`, `first//1`, `pct//2`, `inc//1`, `streak//all` |
+
+### 🔤 Template Variables
+
+Use variables in your card content for dynamic replacement:
+
+**Built-in Variables:**
+- `{{date}}` - Current date (YYYY-MM-DD)
+- `{{time}}` - Current time (HH:mm)
+- `{{datetime}}` - Date and time combined
+- `{{weekday}}` - Day name (Monday, Tuesday, etc.)
+- `{{month}}` - Month name
+- `{{year}}` - Current year
+- `{{timestamp}}` - Unix timestamp
+- `{{random}}` - Random 6-digit number
+- `{{uuid}}` - Random UUID v4
+
+**Custom Variables:**
+Any other `{{variableName}}` will prompt for input when copying.
+
+---
+
+## 🚀 Installation
+
+### Option 1: Use Online (Recommended)
+
+Visit the hosted version and install as a PWA:
+
+1. Open Boxy in your browser
+2. Click the install icon in the address bar (or use browser menu)
+3. Click "Install" to add Boxy to your device
+
+### Option 2: Self-Host
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/boxy.git
+cd boxy
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+### Option 3: Docker
+
+```bash
+# Build and run with Docker
+docker build -t boxy .
+docker run -p 8080:80 boxy
+```
+
+---
+
+## 📖 Usage
+
+### Getting Started
+
+1. **Create a Box**: Click "Create First Box" or press `Ctrl+B`
+2. **Add a Tab**: Click the `+` button in the tab bar or press `Ctrl+T`
+3. **Create Cards**: Click "New Card" or press `Ctrl+N`
+4. **Copy Content**: Click the copy button or press `C` on a selected card
+
+### Managing Content
+
+- **Edit**: Click the edit button or press `E` on a selected card
+- **Delete**: Click the trash icon or press `Delete`
+- **Pin**: Click the pin icon or press `P` to pin cards/tabs
+- **Search**: Press `Ctrl+K` to focus search, type to filter
+- **Tags**: Add tags to cards for organization, filter with `tag:tagname`
+
+### Multi-Box View
+
+- **Minimize**: Click `—` to collapse a box to a bar
+- **Maximize**: Click `□` to expand a box to full screen
+- **Switch**: Click on any box header to make it active
 
 ---
 
 ## ⌨️ Keyboard Shortcuts
 
-### Global Shortcuts
+### Global
+
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl/Cmd + K` | Fokus ke search bar |
-| `Ctrl/Cmd + N` | Buat kartu baru |
-| `Ctrl/Cmd + T` | Buat tab baru |
-| `Ctrl/Cmd + B` | Buat box baru |
-| `Ctrl/Cmd + Z` | Undo |
-| `Ctrl/Cmd + Shift + Z` | Redo |
-| `Ctrl/Cmd + ,` | Buka settings |
-| `Escape` | Tutup modal / Clear search |
-| `?` | Tampilkan semua shortcuts |
+| `Ctrl+K` | Focus search |
+| `Ctrl+N` | New card |
+| `Ctrl+T` | New tab |
+| `Ctrl+B` | New box |
+| `Ctrl+Z` | Undo |
+| `Ctrl+Shift+Z` | Redo |
+| `Ctrl+,` | Settings |
+| `Escape` | Close modal / Clear search |
+| `?` | Show shortcuts |
 
 ### Navigation
+
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl/Cmd + 1-9` | Pindah ke tab 1-9 |
-| `Ctrl/Cmd + Tab` | Tab berikutnya |
-| `Ctrl/Cmd + Shift + Tab` | Tab sebelumnya |
-| `Arrow Up/Down` | Navigasi kartu (saat search) |
-| `Enter` | Copy kartu yang di-highlight |
+| `Ctrl+1-9` | Switch to tab 1-9 |
+| `Ctrl+Tab` | Next tab |
+| `Ctrl+Shift+Tab` | Previous tab |
+| `↑↓←→` | Navigate cards |
+| `Tab` | Cycle through cards |
+| `Enter` | Copy selected card |
 
 ### Card Actions
+
 | Shortcut | Action |
 |----------|--------|
-| `C` | Copy kartu terpilih |
-| `E` | Edit kartu terpilih |
-| `Delete` | Hapus kartu terpilih |
-| `P` | Toggle pin kartu |
+| `C` | Copy card |
+| `E` | Edit card |
+| `P` | Toggle pin |
+| `Delete` | Delete card |
 
 ---
 
-## 🔢 Formula System
+## 🛠 Tech Stack
 
-### Format
-```
-type//range
+- **Frontend**: React 18 + TypeScript
+- **Styling**: Tailwind CSS + CSS Variables
+- **Build**: Vite
+- **Storage**: localStorage (IndexedDB planned)
+- **Icons**: Custom SVG (Lucide-style)
 
-Contoh:
-├── sum//all   → jumlah semua nilai di kolom
-├── sum//3     → jumlah 3 nilai terakhir
-├── avg//all   → rata-rata semua
-├── mnt//2     → selisih menit dari 2 baris di atas
-└── dur//all   → total durasi semua
-```
+### Browser Support
 
-### Kategori Formula
-1. **Time Formulas** - `mnt//N`, `hrs//N`, `sec//N`, `dur//N`
-2. **Numeric Formulas** - `sum//N`, `avg//N`, `max//all`, `min//all`
-3. **Date Formulas** - `days//N`, `weeks//all`
-4. **Special Formulas** - `last//N`, `first//N`, `pct//N`, `streak//all`
-
----
-
-## 📋 Variable Templates
-
-### Built-in Variables (Auto-replaced)
-| Variable | Output | Contoh |
-|----------|--------|---------|
-| `{{date}}` | Tanggal saat ini (YYYY-MM-DD) | 2024-01-26 |
-| `{{time}}` | Waktu saat ini (HH:mm) | 14:30 |
-| `{{datetime}}` | Tanggal + waktu | 2024-01-26 14:30 |
-| `{{random}}` | 6 digit acak | 847291 |
-| `{{uuid}}` | Random UUID | a1b2c3d4-e5f6-... |
-| `{{clipboard}}` | Isi clipboard saat ini | (bervariasi) |
-
-### Custom Variables (Memerlukan Input User)
-```
-Konten: "Dear {{name}}, your order {{order_id}} is ready."
-
-Saat copy:
-├── Detect custom variables: name, order_id
-├── Tampilkan Variable Input Modal
-├── User mengisi: name = "John", order_id = "12345"
-└── Output: "Dear John, your order 12345 is ready."
-```
+| Browser | Support |
+|---------|---------|
+| Chrome | ✅ Full |
+| Edge | ✅ Full |
+| Firefox | ✅ Full |
+| Safari | ✅ Full |
+| Mobile Chrome | ✅ Responsive |
+| Mobile Safari | ✅ Responsive |
 
 ---
 
-## 🔍 Search & Filter
+## 📁 Project Structure
 
-### Fitur Pencarian
-- **Full-text search** - Cari di title dan content
-- **Tag filtering** - `[tag:work ×]` untuk filter berdasarkan tag
-- **Highlight results** - Hasil pencarian di-highlight
-- **Live search** - Hasil update real-time
-
-### Contoh Pencarian
 ```
-Search: "email template"
-Results: Kartu yang mengandung "email" atau "template"
-
-Search: "email [tag:work]"
-Results: Kartu dengan "email" DAN tag "work"
+boxy/
+├── public/
+│   ├── logo.svg          # App logo
+│   ├── manifest.json     # PWA manifest
+│   └── sw.js             # Service worker
+├── src/
+│   ├── components/
+│   │   ├── cards/        # Card components
+│   │   ├── icons/        # SVG icons
+│   │   ├── layout/       # Layout components
+│   │   └── modals/       # Modal dialogs
+│   ├── config/           # App configuration
+│   ├── store/            # State management
+│   ├── types/            # TypeScript types
+│   ├── utils/            # Utility functions
+│   ├── App.tsx           # Main app component
+│   └── main.tsx          # Entry point
+├── index.html
+├── package.json
+├── tailwind.config.js
+├── tsconfig.json
+└── vite.config.ts
 ```
 
 ---
 
-## ⚙️ Settings & Limits
+## 🔐 Privacy
 
-### Default Limits
-| Entity | Default Limit | Bypass? |
-|--------|---------------|---------|
-| Box | 10 | Ya |
-| Tab per Box | 12 | Ya |
-| Card per Tab | 50 | Ya |
-| Column per Table | 10 | Ya |
-| History per Card | 4 | Tidak |
-| Undo Steps | 7 | Tidak |
+Boxy is designed with privacy as a core principle:
 
-### Bypass Mechanism
-User dapat mengaktifkan bypass semua limit melalui Settings → Advanced Settings.
-
-**Warning:** Bypassing limits may cause performance issues.
+- ✅ **No tracking** - Zero analytics or telemetry
+- ✅ **No network requests** - Works 100% offline
+- ✅ **Local storage only** - Data stays on your device
+- ✅ **No accounts** - No sign-up required
+- ✅ **Open source** - Audit the code yourself
 
 ---
 
-## 📁 Struktur Data
+## 🤝 Contributing
 
-### Model Data Utama
-```
-STATE (Global Container)
-├── settings          → Pengaturan aplikasi
-├── boxes[]           → Array of Box entities
-├── tabs[]            → Array of Tab entities  
-├── cards[]           → Array of Card entities
-├── allTags[]         → Registry semua tag yang ada
-├── actionHistory[]   → Undo stack (max 7 actions)
-└── actionFuture[]    → Redo stack
-```
+Contributions are welcome! Please read our contributing guidelines before submitting a PR.
 
-### Relasi Entity
-```
-                    ┌───────────┐
-                    │  SETTINGS │
-                    └───────────┘
-                          │
-                    (app-level)
-                          │
-    ┌─────────────────────┼─────────────────────┐
-    │                     │                     │
-    ▼                     ▼                     ▼
-┌───────┐  1      *  ┌───────┐  1      *  ┌───────┐
-│  BOX  │───────────▶│  TAB  │───────────▶│ CARD  │
-└───────┘            └───────┘            └───────┘
-    │                    │                    │
-    │                    │                    ├── history[]
-    │                    │                    └── table{}
-    │                    │
-    │                    └── pinned tabs muncul di awal
-    │
-    └── active box menentukan tabs yang tampil
-```
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ---
 
-## 🗃️ Export & Import
+## 📜 License
 
-### Format Export
-```
-File: boxy_export_2024-01-26.json
-{
-  "_meta": { "app": "Boxy", "version": "1.0.23", ... },
-  "settings": { ... },
-  "boxes": [ ... ],
-  "tabs": [ ... ],
-  "cards": [ ... ],
-  "allTags": [ ... ]
-}
-```
-
-### Opsi Export
-1. **Export All Data** - Semua boxes, tabs, cards, dan settings
-2. **Current Box Only** - Hanya box aktif beserta tabs dan cards-nya
-
-### Import Validation
-1. Validasi format JSON
-2. Cek versi kompatibilitas
-3. Validasi integritas data
-4. Konfirmasi user
-5. Eksekusi import
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🎯 Arsitektur Teknis
+## 🙏 Acknowledgments
 
-### 4-Layer System
-```
-LAYER 1: PRESENTATION
-├── Tab Bar, Address Bar, Content Area
-├── Modals, Tooltips, Toast Notifications
-└── UI Components
-
-LAYER 2: APPLICATION
-├── Event Dispatcher, State Machine
-├── Modal Controller, Keyboard Handler
-├── Drag & Drop Coordinator
-└── Undo/Redo Manager
-
-LAYER 3: DOMAIN
-├── CRUD Operations (Box, Tab, Card)
-├── Markdown Parser, Formula Evaluator
-├── Variable Template Processor
-├── Search & Filter Engine
-└── Tag Manager
-
-LAYER 4: PERSISTENCE
-├── localStorage Adapter
-├── JSON Serialization/Deserialization
-├── Schema Versioning & Migration
-└── Export/Import Handler
-```
-
-### Struktur File
-```
-boxy.html (single file)
-│
-├── <head>
-│   ├── Meta tags
-│   ├── <style> ─── All CSS (embedded)
-│   └── Favicon (inline SVG/base64)
-│
-├── <body>
-│   ├── #app ─── Main container
-│   │   ├── .tab-bar
-│   │   ├── .address-bar
-│   │   └── .content-area
-│   │
-│   ├── #modal-container ─── Modal portal
-│   ├── #toast-container ─── Toast portal
-│   └── #tooltip-container ─── Tooltip portal
-│
-└── <script> ─── All JavaScript (embedded)
-    │
-    ├── // ===== CONFIG & CONSTANTS =====
-    ├── // ===== STATE MANAGEMENT =====
-    ├── // ===== UTILITIES =====
-    ├── // ===== CRUD OPERATIONS =====
-    ├── // ===== PARSERS =====
-    ├── // ===== RENDER FUNCTIONS =====
-    ├── // ===== UI COMPONENTS =====
-    ├── // ===== EVENT HANDLERS =====
-    ├── // ===== UNDO/REDO =====
-    ├── // ===== EXPORT/IMPORT =====
-    └── // ===== INIT =====
-```
+- Icons inspired by [Lucide Icons](https://lucide.dev)
+- UI patterns inspired by Google Chrome
+- Built with ❤️ for the developer community
 
 ---
 
-## 🚀 Cara Menggunakan
-
-### 1. Memulai
-1. Buka `boxy.html` di browser
-2. Aplikasi langsung berjalan (tidak perlu instalasi)
-3. Data otomatis tersimpan di localStorage browser
-
-### 2. Membuat Struktur Pertama
-1. Klik **Create Box** (atau tekan `Ctrl/Cmd + B`)
-2. Pilih icon dan beri nama (misal: "Work")
-3. Klik **Create Tab** (atau tekan `Ctrl/Cmd + T`) di dalam box
-4. Beri nama tab (misal: "Code Snippets")
-5. Klik **Create Card** (atau tekan `Ctrl/Cmd + N`) di dalam tab
-
-### 3. Workflow Umum
-1. **Menambahkan konten** - Buat card baru, isi dengan markdown
-2. **Menggunakan variable** - Gunakan `{{date}}`, `{{name}}`, dll
-3. **Menambahkan tag** - Gunakan format `#tagname` untuk organisasi
-4. **Mencari konten** - Tekan `Ctrl/Cmd + K` untuk fokus search
-5. **Copy ke clipboard** - Klik tombol Copy atau tekan `C`
-6. **Mengedit konten** - Klik Edit atau tekan `E`
-
-### 4. Tips Produktivitas
-- Gunakan **keyboard shortcuts** untuk aksi cepat
-- **Pin** tab/kartu penting untuk akses cepat
-- Gunakan **table formulas** untuk tracking data
-- Ekspor data reguler sebagai **backup**
-- Atur **limits** sesuai kebutuhan
-
----
-
-## 🔧 Development Notes
-
-### Teknologi yang Digunakan
-- **Frontend**: Vanilla JavaScript, CSS3, HTML5
-- **Storage**: localStorage dengan JSON serialization
-- **Icons**: 200+ inline SVG icons (Lucide/Feather style)
-- **Markdown**: Custom parser (mendukung semua fitur umum)
-- **Build**: Vite dengan vite-plugin-singlefile
-
-### Browser Compatibility
-- Chrome/Edge (last 2 versions) ✓ Full support
-- Firefox (last 2 versions) ✓ Full support
-- Safari (last 2 versions) ✓ Full support
-- Mobile Chrome/Safari ✓ Responsive support
-
-### Performance Optimizations
-- Selective rendering (hanya komponen yang berubah)
-- Debouncing untuk search dan resize
-- Lazy operations untuk heavy computations
-- Memory management dengan limits
-- Selective serialization untuk storage
-
----
-
-## 📞 Support & Feedback
-
-### Issue Reporting
-Jika menemukan bug atau memiliki saran fitur:
-1. Cek apakah issue sudah ada di daftar
-2. Jelaskan dengan detail (browser, OS, steps to reproduce)
-3. Sertakan screenshots jika memungkinkan
-
-### Feature Requests
-Boxy dirancang untuk tetap sederhana dan fokus. Fitur yang TIDAK akan ditambahkan:
-- Diagram/Mermaid support
-- Cross-container drag & drop
-- Cloud sync
-- Real-time collaboration
-- External dependencies
-
----
-
-## 📄 License
-
-MIT License - Bebas digunakan, dimodifikasi, dan didistribusikan.
-
----
-
-## 🔮 Roadmap (Potential Future Features)
-
-### Prioritized
-1. Card templates (reusable card structures)
-2. Advanced search operators (AND, OR, NOT)
-3. Bulk operations (select multiple cards)
-4. Card linking/references
-
-### Under Consideration
-1. Local file attachment support
-2. Advanced statistics/analytics
-3. Plugin system (very lightweight)
-4. Custom CSS themes
-
-### Not Planned
-1. Cloud sync/backup
-2. Real-time collaboration
-3. External integrations
-4. Mobile apps (tetap berbasis web)
-
----
-
-## 🎉 Credits
-
-Dibuat dengan ❤️ untuk komunitas power users, developers, dan penulis teknis yang menghargai privasi, kemandirian, dan efisiensi.
-
-**Boxy** - Your offline clipboard manager. Simple, fast, and always there when you need it.
-
----
-
-```
-╔═══════════════════════════════════════════════════════════════════╗
-║                                                                   ║
-║                    BOXY v1.0.23                                   ║
-║                                                                   ║
-║              Your Offline Clipboard Manager                       ║
-║                                                                   ║
-║            Ready to boost your productivity!                      ║
-║                                                                   ║
-╚═══════════════════════════════════════════════════════════════════╝
-```
-
----
-
-**Mulai menggunakan Boxy sekarang:** Buka `boxy.html` di browser favorit Anda!
+<p align="center">
+  <strong>Boxy</strong> - Your offline clipboard manager
+  <br>
+  <sub>Made with ❤️ by the community</sub>
+</p>
