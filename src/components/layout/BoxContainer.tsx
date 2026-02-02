@@ -8,6 +8,7 @@ import { TabBar } from './TabBar';
 import { AddressBar } from './AddressBar';
 import { CardGrid } from '../cards/CardGrid';
 import { DynamicIcon, Icon } from '@/components/icons/Icons';
+import { Logo } from '@/components/icons/Logo';
 import type { Box } from '@/types';
 
 interface BoxContainerProps {
@@ -192,9 +193,9 @@ function EmptyState() {
   
   return (
     <div className="flex-1 flex flex-col items-center justify-center p-8 text-center min-h-screen bg-[var(--bg-main)]">
-      {/* Large Box Icon */}
-      <div className="w-24 h-24 flex items-center justify-center bg-[var(--bg-tertiary)] rounded-3xl mb-8 shadow-lg">
-        <Icon.Box size={48} className="text-[var(--primary)]" />
+      {/* Boxy Logo */}
+      <div className="mb-8">
+        <Logo size={72} />
       </div>
       
       {/* Welcome Text */}

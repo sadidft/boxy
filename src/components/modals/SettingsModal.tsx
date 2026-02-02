@@ -6,6 +6,7 @@ import { useState, useCallback } from 'react';
 import { Modal, Button } from './Modal';
 import { useApp, useModal, useToast } from '@/store/AppContext';
 import { Download, Upload, Trash, Keyboard } from '@/components/icons/Icons';
+import { Logo } from '@/components/icons/Logo';
 import { cn } from '@/utils/cn';
 import { exportAllData, clearAllData } from '@/store/storage';
 import { APP_CONFIG } from '@/config/constants';
@@ -276,12 +277,25 @@ export function SettingsModal() {
         {/* About */}
         <section>
           <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-3">About</h3>
-          <p className="text-sm text-[var(--text-secondary)]">
-            {APP_CONFIG.name} v{APP_CONFIG.version}
-          </p>
-          <p className="text-xs text-[var(--text-tertiary)] mt-1">
-            {APP_CONFIG.tagline}
-          </p>
+          <div className="flex items-start gap-4">
+            <div className="flex-shrink-0">
+              <Logo size={48} />
+            </div>
+            <div>
+              <p className="text-lg font-semibold text-[var(--text-primary)]">
+                {APP_CONFIG.name}
+              </p>
+              <p className="text-sm text-[var(--text-secondary)]">
+                Version {APP_CONFIG.version}
+              </p>
+              <p className="text-xs text-[var(--text-tertiary)] mt-1">
+                {APP_CONFIG.tagline}
+              </p>
+              <p className="text-xs text-[var(--text-tertiary)] mt-2">
+                100% offline • No tracking • Your data stays with you
+              </p>
+            </div>
+          </div>
         </section>
       </div>
     </Modal>

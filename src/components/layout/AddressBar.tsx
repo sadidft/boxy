@@ -220,19 +220,26 @@ export function AddressBar() {
           </button>
         )}
 
-        {/* Box Switcher */}
+        {/* Box Switcher - Shows active box icon */}
         <div className="relative" ref={boxDropdownRef}>
           <button
             onClick={() => setShowBoxDropdown(!showBoxDropdown)}
             className={cn(
               'p-2 rounded-lg transition-colors',
-              'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]'
+              showBoxDropdown
+                ? 'text-[var(--primary)] bg-[var(--bg-tertiary)]'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]'
             )}
             aria-label="Switch box"
             aria-haspopup="true"
             aria-expanded={showBoxDropdown}
+            title={activeBox ? `Current: ${activeBox.name}` : 'Switch box'}
           >
-            <Circle size={18} filled={showBoxDropdown} />
+            {activeBox ? (
+              <DynamicIcon name={activeBox.icon} size={18} />
+            ) : (
+              <Circle size={18} filled={showBoxDropdown} />
+            )}
           </button>
           
           {showBoxDropdown && (
