@@ -154,10 +154,10 @@ export function CardGrid() {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto p-4">
+    <div className="flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-4">
       {/* Search results count */}
       {(state.searchQuery || state.searchTags.length > 0) && (
-        <div className="mb-4 text-sm text-[var(--text-secondary)]">
+        <div className="mb-3 sm:mb-4 text-sm text-[var(--text-secondary)]">
           {cards.length} result{cards.length !== 1 ? 's' : ''} 
           {state.searchQuery && ` for "${state.searchQuery}"`}
         </div>
@@ -166,7 +166,7 @@ export function CardGrid() {
       {/* Card grid */}
       <div 
         className={cn(
-          'grid gap-4',
+          'grid gap-3 sm:gap-4',
           state.settings.features.masonryLayout
             ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
             : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
@@ -187,14 +187,14 @@ export function CardGrid() {
         ))}
       </div>
 
-      {/* Floating action button */}
+      {/* Floating action button - responsive */}
       <button
         onClick={handleCreateCard}
-        className="fixed bottom-6 right-6 flex items-center gap-2 px-4 py-3 bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white rounded-full shadow-lg transition-all hover:scale-105"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white rounded-full shadow-lg transition-all hover:scale-105 z-40"
         aria-label="New Card"
       >
         <Plus size={20} />
-        <span className="font-medium">New Card</span>
+        <span className="font-medium hidden sm:inline">New Card</span>
       </button>
     </div>
   );

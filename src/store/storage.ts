@@ -132,7 +132,7 @@ function createInitialDataWithSample(): AppState {
   const box: Box = {
     id: generateId('box'),
     name: 'My Workspace',
-    icon: 'briefcase',
+    icon: 'boxy',
     order: 0,
     createdAt: now,
     updatedAt: now,
@@ -145,7 +145,7 @@ function createInitialDataWithSample(): AppState {
     id: generateId('tab'),
     boxId: box.id,
     name: 'Quick Snippets',
-    icon: 'zap',
+    icon: 'boxy',
     pinned: true,
     order: 0,
     createdAt: now,

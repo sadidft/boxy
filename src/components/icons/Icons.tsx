@@ -27,6 +27,27 @@ const createIcon = (paths: React.ReactNode): React.FC<IconProps> => {
   );
 };
 
+// Boxy Logo Icon (Brand icon - default for new boxes/tabs)
+export const Boxy: React.FC<IconProps> = ({ size = 24, className }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" className={className} fill="none">
+    <path 
+      d="M19.5 8.5v7a2 2 0 0 1-1 1.73l-5.5 3.18a2 2 0 0 1-2 0l-5.5-3.18a2 2 0 0 1-1-1.73v-7a2 2 0 0 1 1-1.73l5.5-3.18a2 2 0 0 1 2 0l5.5 3.18a2 2 0 0 1 1 1.73z"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path 
+      d="M12 12l5.5-3.18M12 12v7.36M12 12L6.5 8.82"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <circle cx="12" cy="5" r="1.5" fill="currentColor" />
+  </svg>
+);
+
 // Core UI Icons
 export const Plus = createIcon(<><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></>);
 export const X = createIcon(<><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></>);
@@ -301,6 +322,7 @@ export const Hospital = createIcon(<><path d="M12 6v4" /><path d="M14 14h-4" /><
 
 // Icon map for dynamic icon rendering
 export const ICON_MAP: Record<string, React.FC<IconProps>> = {
+  boxy: Boxy,
   plus: Plus,
   x: X,
   check: Check,
@@ -524,6 +546,7 @@ export const DynamicIcon: React.FC<DynamicIconProps> = ({ name, ...props }) => {
 
 // Icon namespace for easy access (as object with component properties)
 export const Icon = {
+  Boxy,
   Plus,
   X,
   Check,

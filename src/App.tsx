@@ -11,6 +11,7 @@ import { MultiBoxView } from '@/components/layout/BoxContainer';
 import { ModalController } from '@/components/modals/ModalController';
 import { ToastContainer } from '@/components/ui/Toast';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
+import { adjustColorBrightness } from '@/utils/helpers';
 
 function AppContent() {
   const { state } = useApp();
@@ -51,10 +52,16 @@ function AppContent() {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, [state.settings.theme]);
 
-  // Apply primary color as CSS variable
+  // Apply primary color and calculate hover color dynamically
   useEffect(() => {
-    document.documentElement.style.setProperty('--primary', state.settings.primaryColor);
-  }, [state.settings.primaryColor]);
+    const primaryColor = state.settings.primaryColor;
+    document.documentElement.style.setProperty('--primary', primaryColor);
+    
+    // Calculate hover color (lighter for dark theme, darker for light theme)
+    const isLight = document.documentElement.classList.contains('light');
+    const hoverColor = adjustColorBrightness(primaryColor, isLight ? -15 : 15);
+    document.documentElement.style.setProperty('--primary-hover', hoverColor);
+  }, [state.settings.primaryColor, state.settings.theme]);
 
   return (
     <div className="h-full flex flex-col bg-[var(--bg-main)]">

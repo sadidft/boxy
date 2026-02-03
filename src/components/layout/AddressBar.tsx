@@ -1,6 +1,6 @@
 /**
  * Boxy Address Bar Component
- * Navigation, search, and actions
+ * Navigation, search, and actions - Responsive design
  */
 
 import React, { useState, useCallback, useRef, useEffect } from 'react';
@@ -121,9 +121,9 @@ export function AddressBar() {
   }, [dispatch]);
 
   return (
-    <div className="flex items-center h-12 px-2 gap-2 bg-[var(--bg-secondary)] border-b border-[var(--border-primary)]">
-      {/* Navigation buttons */}
-      <div className="flex items-center gap-1">
+    <div className="flex items-center h-12 px-2 gap-1 sm:gap-2 bg-[var(--bg-secondary)] border-b border-[var(--border-primary)] overflow-x-hidden">
+      {/* Navigation buttons - hidden on very small screens */}
+      <div className="hidden sm:flex items-center gap-1">
         <button
           onClick={handleUndo}
           disabled={!canUndo}
@@ -154,38 +154,40 @@ export function AddressBar() {
         </button>
       </div>
 
-      {/* Path / Search area */}
-      <div className="flex-1 relative">
+      {/* Path / Search area - takes remaining space */}
+      <div className="flex-1 min-w-0 relative">
         <div 
           className={cn(
-            'flex items-center gap-2 px-3 py-1.5 rounded-lg',
+            'flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 rounded-lg',
             'bg-[var(--bg-main)] border border-[var(--border-primary)]',
             'focus-within:border-[var(--primary)] focus-within:ring-1 focus-within:ring-[var(--primary)]/20'
           )}
         >
           <Search size={16} className="text-[var(--text-tertiary)] flex-shrink-0" />
           
-          {/* Search tags */}
-          {state.searchTags.map(tag => (
-            <span 
-              key={tag}
-              className="flex items-center gap-1 px-2 py-0.5 bg-[var(--primary)]/20 text-[var(--primary)] text-xs rounded-full"
-            >
-              #{tag}
-              <button 
-                onClick={() => dispatch({ type: 'SET_SEARCH_TAGS', payload: state.searchTags.filter(t => t !== tag) })}
-                className="hover:text-[var(--primary-hover)]"
+          {/* Search tags - horizontal scrollable on mobile */}
+          <div className="flex items-center gap-1 overflow-x-auto scrollbar-none flex-shrink-0 max-w-[30%] sm:max-w-none">
+            {state.searchTags.map(tag => (
+              <span 
+                key={tag}
+                className="flex items-center gap-1 px-2 py-0.5 bg-[var(--primary)]/20 text-[var(--primary)] text-xs rounded-full whitespace-nowrap"
               >
-                <X size={12} />
-              </button>
-            </span>
-          ))}
+                #{tag}
+                <button 
+                  onClick={() => dispatch({ type: 'SET_SEARCH_TAGS', payload: state.searchTags.filter(t => t !== tag) })}
+                  className="hover:text-[var(--primary-hover)]"
+                >
+                  <X size={12} />
+                </button>
+              </span>
+            ))}
+          </div>
           
           <input
             ref={searchInputRef}
             type="text"
             placeholder={state.isSearchMode ? 'Search cards...' : activeBox && activeTab ? `${activeBox.name} › ${activeTab.name}` : 'Search...'}
-            className="flex-1 bg-transparent text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] outline-none"
+            className="flex-1 min-w-0 bg-transparent text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] outline-none truncate"
             onChange={handleSearchChange}
             onFocus={handleSearchFocus}
           />
@@ -193,7 +195,7 @@ export function AddressBar() {
           {(state.isSearchMode || state.searchQuery) && (
             <button
               onClick={handleClearSearch}
-              className="p-1 text-[var(--text-tertiary)] hover:text-[var(--text-primary)] rounded"
+              className="p-1 text-[var(--text-tertiary)] hover:text-[var(--text-primary)] rounded flex-shrink-0"
             >
               <X size={14} />
             </button>
@@ -201,14 +203,14 @@ export function AddressBar() {
         </div>
       </div>
 
-      {/* Action buttons */}
-      <div className="flex items-center gap-1">
-        {/* Pin Tab */}
+      {/* Action buttons - compact on mobile */}
+      <div className="flex items-center gap-0.5 sm:gap-1 flex-shrink-0">
+        {/* Pin Tab - hidden on mobile */}
         {activeTab && (
           <button
             onClick={handlePinTab}
             className={cn(
-              'p-2 rounded-lg transition-colors',
+              'hidden sm:flex p-2 rounded-lg transition-colors',
               activeTab.pinned 
                 ? 'text-[var(--primary)]'
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]'
@@ -243,7 +245,7 @@ export function AddressBar() {
           </button>
           
           {showBoxDropdown && (
-            <div className="absolute right-0 top-full mt-1 w-56 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg shadow-lg z-50 py-1">
+            <div className="absolute right-0 top-full mt-1 w-56 max-w-[calc(100vw-1rem)] bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg shadow-lg z-50 py-1">
               {state.boxes.map(box => (
                 <button
                   key={box.id}
@@ -300,7 +302,52 @@ export function AddressBar() {
           </button>
           
           {showMoreDropdown && (
-            <div className="absolute right-0 top-full mt-1 w-48 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg shadow-lg z-50 py-1">
+            <div className="absolute right-0 top-full mt-1 w-48 max-w-[calc(100vw-1rem)] bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg shadow-lg z-50 py-1">
+              {/* Mobile-only: Undo/Redo */}
+              <div className="sm:hidden">
+                <button
+                  onClick={() => { handleUndo(); setShowMoreDropdown(false); }}
+                  disabled={!canUndo}
+                  className={cn(
+                    'w-full flex items-center gap-3 px-3 py-2 text-sm transition-colors',
+                    canUndo 
+                      ? 'text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]'
+                      : 'text-[var(--text-tertiary)] cursor-not-allowed'
+                  )}
+                >
+                  <ChevronLeft size={16} />
+                  <span>Undo</span>
+                </button>
+                <button
+                  onClick={() => { handleRedo(); setShowMoreDropdown(false); }}
+                  disabled={!canRedo}
+                  className={cn(
+                    'w-full flex items-center gap-3 px-3 py-2 text-sm transition-colors',
+                    canRedo 
+                      ? 'text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]'
+                      : 'text-[var(--text-tertiary)] cursor-not-allowed'
+                  )}
+                >
+                  <ChevronRight size={16} />
+                  <span>Redo</span>
+                </button>
+                <div className="h-px bg-[var(--border-primary)] my-1" />
+              </div>
+              
+              {/* Mobile-only: Pin Tab */}
+              {activeTab && (
+                <div className="sm:hidden">
+                  <button
+                    onClick={() => { handlePinTab(); setShowMoreDropdown(false); }}
+                    className="w-full flex items-center gap-3 px-3 py-2 text-sm text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
+                  >
+                    <Star size={16} filled={activeTab.pinned} />
+                    <span>{activeTab.pinned ? 'Unpin Tab' : 'Pin Tab'}</span>
+                  </button>
+                  <div className="h-px bg-[var(--border-primary)] my-1" />
+                </div>
+              )}
+            
               {activeBox && (
                 <button
                   onClick={() => { setShowMoreDropdown(false); openModal('editBox', activeBox); }}
@@ -320,6 +367,16 @@ export function AddressBar() {
                   <span>Edit Tab</span>
                 </button>
               )}
+              
+              <div className="h-px bg-[var(--border-primary)] my-1" />
+              
+              <button
+                onClick={() => { setShowMoreDropdown(false); openModal('settings'); }}
+                className="w-full flex items-center gap-3 px-3 py-2 text-sm text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
+              >
+                <Settings size={16} />
+                <span>Settings</span>
+              </button>
               
               <div className="h-px bg-[var(--border-primary)] my-1" />
               
