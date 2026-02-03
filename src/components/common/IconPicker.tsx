@@ -1,9 +1,9 @@
 /**
  * Boxy Icon Picker Component
- * Icon picker with categories, search, and custom SVG support
+ * Icon picker with categories, search, navigation arrows, and custom SVG support
  */
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { DynamicIcon, AVAILABLE_ICONS, Icon } from '@/components/icons/Icons';
 import { cn } from '@/utils/cn';
 import { generateUUID } from '@/utils/helpers';
@@ -92,6 +92,46 @@ export function IconPicker({
   const [showCustomForm, setShowCustomForm] = useState(false);
   const [customName, setCustomName] = useState('');
   const [customSvg, setCustomSvg] = useState('');
+  
+  // Scroll state for category navigation
+  const categoryScrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  // Check scroll state
+  const checkScrollState = useCallback(() => {
+    const container = categoryScrollRef.current;
+    if (container) {
+      setCanScrollLeft(container.scrollLeft > 0);
+      setCanScrollRight(container.scrollLeft < container.scrollWidth - container.clientWidth - 1);
+    }
+  }, []);
+
+  // Initialize scroll state and listen for changes
+  useEffect(() => {
+    checkScrollState();
+    const container = categoryScrollRef.current;
+    if (container) {
+      container.addEventListener('scroll', checkScrollState);
+      window.addEventListener('resize', checkScrollState);
+      return () => {
+        container.removeEventListener('scroll', checkScrollState);
+        window.removeEventListener('resize', checkScrollState);
+      };
+    }
+  }, [checkScrollState]);
+
+  // Scroll category buttons
+  const scrollCategories = useCallback((direction: 'left' | 'right') => {
+    const container = categoryScrollRef.current;
+    if (container) {
+      const scrollAmount = 150;
+      container.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  }, []);
 
   // Filter icons based on search and category
   const filteredIcons = useMemo(() => {
@@ -162,41 +202,70 @@ export function IconPicker({
         />
       </div>
       
-      {/* Categories */}
-      <div className="flex items-center gap-1 p-2 border-b border-[var(--border-primary)] overflow-x-auto scrollbar-none">
-        <button
-          onClick={() => setActiveCategory('All')}
-          className={cn(
-            'px-3 py-1.5 text-xs font-medium rounded-full whitespace-nowrap transition-colors',
-            activeCategory === 'All'
-              ? 'bg-[var(--primary)] text-white'
-              : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:bg-[var(--bg-main)]'
-          )}
+      {/* Categories with Navigation Arrows */}
+      <div className="relative flex items-center border-b border-[var(--border-primary)]">
+        {/* Left Arrow */}
+        {canScrollLeft && (
+          <button
+            onClick={() => scrollCategories('left')}
+            className="absolute left-0 z-10 flex items-center justify-center w-8 h-full bg-gradient-to-r from-[var(--bg-secondary)] via-[var(--bg-secondary)] to-transparent"
+            aria-label="Scroll left"
+          >
+            <Icon.ChevronLeft size={18} className="text-[var(--text-secondary)]" />
+          </button>
+        )}
+        
+        {/* Category Buttons */}
+        <div 
+          ref={categoryScrollRef}
+          className="flex items-center gap-1 p-2 overflow-x-auto scrollbar-none scroll-smooth"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          All ({AVAILABLE_ICONS.length})
-        </button>
-        {CATEGORY_NAMES.filter(cat => cat !== 'Custom' || customIcons.length > 0).map(category => {
-          const count = category === 'Custom' 
-            ? customIcons.length 
-            : (ICON_CATEGORIES[category] || []).filter(i => AVAILABLE_ICONS.includes(i)).length;
-          
-          if (count === 0 && category !== 'Custom') return null;
-          
-          return (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={cn(
-                'px-3 py-1.5 text-xs font-medium rounded-full whitespace-nowrap transition-colors',
-                activeCategory === category
-                  ? 'bg-[var(--primary)] text-white'
-                  : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:bg-[var(--bg-main)]'
-              )}
-            >
-              {category} ({count})
-            </button>
-          );
-        })}
+          <button
+            onClick={() => setActiveCategory('All')}
+            className={cn(
+              'px-3 py-1.5 text-xs font-medium rounded-full whitespace-nowrap transition-colors flex-shrink-0',
+              activeCategory === 'All'
+                ? 'bg-[var(--primary)] text-white'
+                : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:bg-[var(--bg-main)]'
+            )}
+          >
+            All ({AVAILABLE_ICONS.length})
+          </button>
+          {CATEGORY_NAMES.filter(cat => cat !== 'Custom' || customIcons.length > 0).map(category => {
+            const count = category === 'Custom' 
+              ? customIcons.length 
+              : (ICON_CATEGORIES[category] || []).filter(i => AVAILABLE_ICONS.includes(i)).length;
+            
+            if (count === 0 && category !== 'Custom') return null;
+            
+            return (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={cn(
+                  'px-3 py-1.5 text-xs font-medium rounded-full whitespace-nowrap transition-colors flex-shrink-0',
+                  activeCategory === category
+                    ? 'bg-[var(--primary)] text-white'
+                    : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:bg-[var(--bg-main)]'
+                )}
+              >
+                {category} ({count})
+              </button>
+            );
+          })}
+        </div>
+        
+        {/* Right Arrow */}
+        {canScrollRight && (
+          <button
+            onClick={() => scrollCategories('right')}
+            className="absolute right-0 z-10 flex items-center justify-center w-8 h-full bg-gradient-to-l from-[var(--bg-secondary)] via-[var(--bg-secondary)] to-transparent"
+            aria-label="Scroll right"
+          >
+            <Icon.ChevronRight size={18} className="text-[var(--text-secondary)]" />
+          </button>
+        )}
       </div>
       
       {/* Add Custom Icon Section */}
@@ -237,7 +306,7 @@ export function IconPicker({
                 </button>
                 <button
                   onClick={handleAddCustomIcon}
-                  className="flex-1 px-3 py-2 text-sm bg-[var(--primary)] text-white rounded-lg hover:opacity-90 transition-opacity"
+                  className="flex-1 px-3 py-2 text-sm bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-hover)] transition-colors"
                 >
                   Add Icon
                 </button>
@@ -302,7 +371,7 @@ export function IconPicker({
         {onClose && (
           <button
             onClick={onClose}
-            className="px-4 py-2 text-sm bg-[var(--primary)] text-white rounded-lg hover:opacity-90 transition-opacity"
+            className="px-4 py-2 text-sm bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-hover)] transition-colors"
           >
             Done
           </button>
@@ -333,7 +402,7 @@ export function IconPickerModal({
   if (!isOpen) return null;
   
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
@@ -341,7 +410,7 @@ export function IconPickerModal({
       />
       
       {/* Modal */}
-      <div className="relative w-full max-w-lg bg-[var(--bg-secondary)] rounded-xl shadow-xl overflow-hidden">
+      <div className="relative w-full max-w-lg bg-[var(--bg-secondary)] rounded-xl shadow-xl overflow-hidden z-[101]">
         <div className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
           <h3 className="text-lg font-semibold text-[var(--text-primary)]">Choose Icon</h3>
           <button
