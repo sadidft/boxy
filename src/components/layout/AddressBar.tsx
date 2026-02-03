@@ -245,7 +245,7 @@ export function AddressBar() {
           </button>
           
           {showBoxDropdown && (
-            <div className="absolute right-0 top-full mt-1 w-56 max-w-[calc(100vw-1rem)] bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg shadow-lg z-50 py-1">
+            <div className="absolute right-0 top-full mt-1 w-56 max-w-[calc(100vw-1rem)] bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg shadow-lg z-[9999] py-1">
               {state.boxes.map(box => (
                 <button
                   key={box.id}
@@ -302,7 +302,7 @@ export function AddressBar() {
           </button>
           
           {showMoreDropdown && (
-            <div className="absolute right-0 top-full mt-1 w-48 max-w-[calc(100vw-1rem)] bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg shadow-lg z-50 py-1">
+            <div className="absolute right-0 top-full mt-1 w-48 max-w-[calc(100vw-1rem)] bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg shadow-lg z-[9999] py-1">
               {/* Mobile-only: Undo/Redo */}
               <div className="sm:hidden">
                 <button
