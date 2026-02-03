@@ -16,6 +16,7 @@ export default defineConfig({
     tailwindcss(), 
     VitePWA({
       registerType: 'autoUpdate',
+      injectRegister: 'script', 
       includeAssets: ['favicon.svg', 'robots.txt', 'icons/*.png'],
       manifest: {
         name: 'Boxy - Offline Clipboard Manager',
@@ -25,54 +26,54 @@ export default defineConfig({
         background_color: '#0f172a',
         display: 'standalone',
         orientation: 'portrait-primary',
-        scope: '/',
-        start_url: '/',
+        scope: '/boxy/',
+        start_url: '/boxy/',
         categories: ['productivity', 'utilities'],
         icons: [
           {
-            src: '/icons/icon-72x72.png',
+            src: 'icons/icon-72x72.png',
             sizes: '72x72',
             type: 'image/png',
             purpose: 'maskable any'
           },
           {
-            src: '/icons/icon-96x96.png',
+            src: 'icons/icon-96x96.png',
             sizes: '96x96',
             type: 'image/png',
             purpose: 'maskable any'
           },
           {
-            src: '/icons/icon-128x128.png',
+            src: 'icons/icon-128x128.png',
             sizes: '128x128',
             type: 'image/png',
             purpose: 'maskable any'
           },
           {
-            src: '/icons/icon-144x144.png',
+            src: 'icons/icon-144x144.png',
             sizes: '144x144',
             type: 'image/png',
             purpose: 'maskable any'
           },
           {
-            src: '/icons/icon-152x152.png',
+            src: 'icons/icon-152x152.png',
             sizes: '152x152',
             type: 'image/png',
             purpose: 'maskable any'
           },
           {
-            src: '/icons/icon-192x192.png',
+            src: 'icons/icon-192x192.png',
             sizes: '192x192',
             type: 'image/png',
             purpose: 'maskable any'
           },
           {
-            src: '/icons/icon-384x384.png',
+            src: 'icons/icon-384x384.png',
             sizes: '384x384',
             type: 'image/png',
             purpose: 'maskable any'
           },
           {
-            src: '/icons/icon-512x512.png',
+            src: 'icons/icon-512x512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable any'
@@ -83,15 +84,15 @@ export default defineConfig({
             name: 'New Card',
             short_name: 'New Card',
             description: 'Create a new card',
-            url: '/?action=new-card',
-            icons: [{ src: '/icons/icon-96x96.png', sizes: '96x96' }]
+            url: '/boxy/?action=new-card',
+            icons: [{ src: 'icons/icon-96x96.png', sizes: '96x96' }]
           },
           {
             name: 'New Box',
             short_name: 'New Box',
             description: 'Create a new box',
-            url: '/?action=new-box',
-            icons: [{ src: '/icons/icon-96x96.png', sizes: '96x96' }]
+            url: '/boxy/?action=new-box',
+            icons: [{ src: 'icons/icon-96x96.png', sizes: '96x96' }]
           }
         ]
       },
