@@ -10,7 +10,7 @@ import { Box, Clipboard, Folder, Search, Plus } from '@/components/icons/Icons';
 import { cn } from '@/utils/cn';
 import { stripMarkdown } from '@/utils/markdown';
 
-function CardGrid() {
+export function CardGrid() {
   const { state, dispatch } = useApp();
   const { openModal } = useModal();
   const [draggedCardId, setDraggedCardId] = useState<string | null>(null);
@@ -199,7 +199,6 @@ function CardGrid() {
     </div>
   );
 }
-export default CardGrid;
 
 interface EmptyStateProps {
   icon: React.ReactNode;
