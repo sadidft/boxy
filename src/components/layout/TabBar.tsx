@@ -128,7 +128,7 @@ export function TabBar({ boxId, showWindowControls = true, onMinimize, onMaximiz
   if (!activeBox) return null;
 
   return (
-    <div className="flex h-10 bg-[var(--bg-main)] border-b border-[var(--border-primary)] overflow-hidden">
+    <div className="flex h-10 bg-[var(--bg-main)] border-b border-[var(--border-primary)] relative z-30">
       {/* Mobile: Tab dropdown trigger */}
       <div className="sm:hidden flex items-center" ref={mobileMenuRef}>
         <button
