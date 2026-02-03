@@ -373,7 +373,7 @@ export function CardItem({
           {card.tags.slice(0, 5).map(tag => (
             <span 
               key={tag}
-              className="inline-flex items-center gap-1 px-2 py-1 bg-[var(--primary)] bg-opacity-10 text-[var(--primary)] text-xs font-medium rounded-full hover:bg-opacity-20 transition-colors cursor-default"
+              className="inline-flex items-center gap-1 px-2 py-1 bg-[var(--border-primary)] text-[var(--text-primary)] text-xs font-medium rounded-full hover:bg-opacity-20 transition-colors cursor-default"
               title={`Tag: ${tag}`}
             >
               <span className="opacity-60">#</span>
