@@ -382,7 +382,7 @@ export function CardItem({
           ))}
           {card.tags.length > 5 && (
             <span 
-              className="inline-flex items-center px-2 py-1 bg-[var(--bg-tertiary)] text-[var(--text-tertiary)] text-xs rounded-full"
+              className="inline-flex items-center px-2 py-1 bg-[var(--border-primary)] text-[var(--text-primary)] text-xs rounded-full"
               title={`More tags: ${card.tags.slice(5).join(', ')}`}
             >
               +{card.tags.length - 5} more
