@@ -224,6 +224,7 @@ export function CardItem({
   const { state, dispatch } = useApp();
   const { openModal } = useModal();
   const { success, error } = useToast();
+  const [justCopied, setJustCopied] = React.useState(false);
 
   // Parse and highlight content
   const renderedContent = useMemo(() => {
@@ -253,11 +254,23 @@ export function CardItem({
       
       // Update stats
       dispatch({ type: 'INCREMENT_COPY_COUNT', payload: card.id });
+      
+      // Show visual feedback
+      setJustCopied(true);
+      setTimeout(() => setJustCopied(false), 2000);
+      
       success('Copied to clipboard');
     } catch (err) {
       error('Failed to copy');
     }
   }, [card, dispatch, openModal, success, error]);
+  
+  // Double-click to quick copy
+  const handleDoubleClick = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    handleCopy();
+  }, [handleCopy]);
 
   const handleEdit = useCallback(() => {
     openModal('editCard', card);
@@ -308,14 +321,17 @@ export function CardItem({
           : 'border-[var(--border-primary)] hover:border-[var(--border-secondary)]',
         card.pinned && 'border-l-2 border-l-[var(--primary)]',
         isDragging && 'opacity-50 rotate-1 scale-105',
+        justCopied && 'ring-2 ring-[var(--success)]/50',
         'hover:shadow-md'
       )}
       onClick={handleSelect}
+      onDoubleClick={handleDoubleClick}
       draggable={state.settings.features.cardDragDrop}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
       onDragEnd={onDragEnd}
+      title="Double-click to quick copy"
     >
       {/* Header */}
       <div className="flex items-center gap-2 p-3 border-b border-[var(--border-primary)]">
@@ -353,17 +369,22 @@ export function CardItem({
 
       {/* Tags */}
       {card.tags.length > 0 && (
-        <div className="flex flex-wrap gap-1 px-3 pb-2">
+        <div className="flex flex-wrap gap-1.5 px-3 pb-3">
           {card.tags.slice(0, 5).map(tag => (
             <span 
               key={tag}
-              className="px-2 py-0.5 bg-[var(--bg-tertiary)] text-[var(--text-secondary)] text-xs rounded-full"
+              className="inline-flex items-center gap-1 px-2 py-1 bg-[var(--primary)] bg-opacity-10 text-[var(--primary)] text-xs font-medium rounded-full hover:bg-opacity-20 transition-colors cursor-default"
+              title={`Tag: ${tag}`}
             >
-              #{tag}
+              <span className="opacity-60">#</span>
+              {tag}
             </span>
           ))}
           {card.tags.length > 5 && (
-            <span className="px-2 py-0.5 text-[var(--text-tertiary)] text-xs">
+            <span 
+              className="inline-flex items-center px-2 py-1 bg-[var(--bg-tertiary)] text-[var(--text-tertiary)] text-xs rounded-full"
+              title={`More tags: ${card.tags.slice(5).join(', ')}`}
+            >
               +{card.tags.length - 5} more
             </span>
           )}

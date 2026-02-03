@@ -274,6 +274,28 @@ export function SettingsModal() {
           </div>
         </section>
 
+        {/* Statistics */}
+        <section>
+          <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-3">Statistics</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[
+              { label: 'Boxes', value: state.boxes.length, icon: '📦' },
+              { label: 'Tabs', value: state.tabs.length, icon: '📁' },
+              { label: 'Cards', value: state.cards.length, icon: '📋' },
+              { label: 'Tags', value: state.allTags.length, icon: '🏷️' },
+            ].map(stat => (
+              <div key={stat.label} className="p-3 bg-[var(--bg-tertiary)] rounded-lg text-center">
+                <span className="text-2xl">{stat.icon}</span>
+                <p className="text-xl font-bold text-[var(--text-primary)]">{stat.value}</p>
+                <p className="text-xs text-[var(--text-tertiary)]">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-3 text-xs text-[var(--text-tertiary)]">
+            Total copies: {state.cards.reduce((sum, c) => sum + c.copyCount, 0)}
+          </div>
+        </section>
+
         {/* About */}
         <section>
           <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-3">About</h3>

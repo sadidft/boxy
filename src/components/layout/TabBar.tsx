@@ -142,6 +142,19 @@ export function TabBar({ boxId, showWindowControls = true, onMinimize, onMaximiz
               <span className="truncate text-sm font-medium">{tab.name}</span>
             )}
             
+            {/* Card count badge */}
+            {(() => {
+              const cardCount = state.cards.filter(c => c.tabId === tab.id).length;
+              return cardCount > 0 ? (
+                <span 
+                  className="flex-shrink-0 px-1.5 py-0.5 min-w-[18px] text-center text-[10px] font-medium bg-[var(--primary)] bg-opacity-20 text-[var(--primary)] rounded-full"
+                  title={`${cardCount} cards`}
+                >
+                  {cardCount > 99 ? '99+' : cardCount}
+                </span>
+              ) : null;
+            })()}
+            
             {/* Pinned indicator */}
             {tab.pinned && (
               <Star size={12} filled className="text-[var(--primary)] flex-shrink-0" />
