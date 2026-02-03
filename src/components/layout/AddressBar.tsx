@@ -121,7 +121,7 @@ export function AddressBar() {
   }, [dispatch]);
 
   return (
-    <div className="flex items-center h-12 px-2 gap-1 sm:gap-2 bg-[var(--bg-secondary)] border-b border-[var(--border-primary)] overflow-x-hidden">
+    <div className="flex items-center h-12 px-2 gap-1 sm:gap-2 bg-[var(--bg-secondary)] border-b border-[var(--border-primary)] relative z-20">
       {/* Navigation buttons - hidden on very small screens */}
       <div className="hidden sm:flex items-center gap-1">
         <button
