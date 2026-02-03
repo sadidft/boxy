@@ -109,7 +109,7 @@ export function TagInput({
         {tags.map(tag => (
           <span
             key={tag}
-            className="inline-flex items-center gap-1 px-2.5 py-1 bg-[var(--primary)] bg-opacity-20 text-[var(--primary)] rounded-full text-sm font-medium group hover:bg-opacity-30 transition-colors"
+            className="inline-flex items-center gap-1 px-2.5 py-1 bg-opacity-20 bg-[var(--border-primary)] text-[var(--text-primary)] rounded-full text-sm font-medium group hover:bg-opacity-30 transition-colors"
           >
             <span className="text-[var(--primary)] opacity-60">#</span>
             {tag}
