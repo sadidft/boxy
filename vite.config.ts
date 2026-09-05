@@ -1,128 +1,97 @@
-import path from "path";
-import { fileURLToPath } from "url";
-import tailwindcss from "@tailwindcss/vite";
-import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
-import { VitePWA } from "vite-plugin-pwa";
+import { execSync } from 'node:child_process';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// https://vite.dev/config/
+// Calendar build id (guardrail G8: no product version is ever shown). YYYY.MM.<day><hour> keeps ids unique per build.
+const now = new Date();
+const pad = (n: number) => String(n).padStart(2, '0');
+const buildId = `${now.getUTCFullYear()}.${pad(now.getUTCMonth() + 1)}.${pad(now.getUTCDate())}${pad(now.getUTCHours())}`;
+let commit = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? '';
+if (!commit) {
+  try {
+    commit = execSync('git rev-parse --short HEAD', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
+  } catch {
+    commit = 'local';
+  }
+}
+
 export default defineConfig({
-  base: '/boxy/',
-  plugins: [
-    react(), 
-    tailwindcss(), 
-    VitePWA({
-      registerType: 'autoUpdate',
-      injectRegister: 'script', 
-      includeAssets: ['favicon.svg', 'robots.txt', 'icons/*.png'],
-      manifest: {
-        name: 'Boxy - Offline Clipboard Manager',
-        short_name: 'Boxy',
-        description: 'Your offline clipboard manager with hierarchical organization, Markdown support, and template variables.',
-        theme_color: '#069BDE',
-        background_color: '#0f172a',
-        display: 'standalone',
-        orientation: 'portrait-primary',
-        scope: '/boxy/',
-        start_url: '/boxy/',
-        categories: ['productivity', 'utilities'],
-        icons: [
-          {
-            src: 'icons/icon-72x72.png',
-            sizes: '72x72',
-            type: 'image/png',
-            purpose: 'maskable any'
-          },
-          {
-            src: 'icons/icon-96x96.png',
-            sizes: '96x96',
-            type: 'image/png',
-            purpose: 'maskable any'
-          },
-          {
-            src: 'icons/icon-128x128.png',
-            sizes: '128x128',
-            type: 'image/png',
-            purpose: 'maskable any'
-          },
-          {
-            src: 'icons/icon-144x144.png',
-            sizes: '144x144',
-            type: 'image/png',
-            purpose: 'maskable any'
-          },
-          {
-            src: 'icons/icon-152x152.png',
-            sizes: '152x152',
-            type: 'image/png',
-            purpose: 'maskable any'
-          },
-          {
-            src: 'icons/icon-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
-            purpose: 'maskable any'
-          },
-          {
-            src: 'icons/icon-384x384.png',
-            sizes: '384x384',
-            type: 'image/png',
-            purpose: 'maskable any'
-          },
-          {
-            src: 'icons/icon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'maskable any'
-          }
-        ],
-        shortcuts: [
-          {
-            name: 'New Card',
-            short_name: 'New Card',
-            description: 'Create a new card',
-            url: '/boxy/?action=new-card',
-            icons: [{ src: 'icons/icon-96x96.png', sizes: '96x96' }]
-          },
-          {
-            name: 'New Box',
-            short_name: 'New Box',
-            description: 'Create a new box',
-            url: '/boxy/?action=new-box',
-            icons: [{ src: 'icons/icon-96x96.png', sizes: '96x96' }]
-          }
-        ]
+  base: '/',
+  define: {
+    __BUILD_ID__: JSON.stringify(buildId),
+    __COMMIT__: JSON.stringify(commit),
+  },
+  resolve: { alias: { '@': path.resolve(__dirname, 'src') } },
+  server: { host: '0.0.0.0', port: 5173, strictPort: false, allowedHosts: true },
+  preview: { host: '0.0.0.0', port: 4173, allowedHosts: true },
+  build: {
+    target: 'es2022',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom', 'react/jsx-runtime'],
+          data: ['yjs', 'y-indexeddb', 'dexie', 'dexie-react-hooks'],
+          markdown: ['markdown-it', 'dompurify'],
+        },
       },
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'google-fonts-cache',
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              }
-            }
-          }
-        ]
-      },
-      devOptions: {
-        enabled: false
-      }
-    })
-  ],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "src"),
     },
   },
+  plugins: [
+    react(),
+    tailwindcss(),
+    VitePWA({
+      strategies: 'generateSW',
+      registerType: 'prompt',
+      injectRegister: false,
+      includeAssets: ['icons/*.png', 'icons/icon.svg', 'logo.svg', 'logo-mono.svg', 'fonts/*.woff2', 'og-image.png', 'robots.txt'],
+      manifest: {
+        id: '/',
+        name: 'Boxy',
+        short_name: 'Boxy',
+        description: 'Your snippets, offline first.',
+        lang: 'en',
+        dir: 'ltr',
+        start_url: '/',
+        scope: '/',
+        display: 'standalone',
+        display_override: ['window-controls-overlay', 'standalone'],
+        orientation: 'any',
+        theme_color: '#0a1628',
+        background_color: '#0a1628',
+        categories: ['productivity', 'utilities'],
+        icons: [
+          ...[72, 96, 128, 144, 152, 192, 384, 512].map((s) => ({
+            src: `/icons/icon-${s}.png`,
+            sizes: `${s}x${s}`,
+            type: 'image/png',
+            purpose: 'any',
+          })),
+          { src: '/icons/maskable-192.png', sizes: '192x192', type: 'image/png', purpose: 'maskable' },
+          { src: '/icons/maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+        ],
+        shortcuts: [
+          { name: 'New card', short_name: 'New card', url: '/?action=new-card', icons: [{ src: '/icons/shortcut-plus.png', sizes: '96x96', type: 'image/png' }] },
+          { name: 'Search', short_name: 'Search', url: '/?action=search', icons: [{ src: '/icons/shortcut-search.png', sizes: '96x96', type: 'image/png' }] },
+        ],
+      },
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,svg,png,woff2,webmanifest}'],
+        navigateFallback: '/index.html',
+        // /boxy/* is the address of the previous app; Vercel rewrites it to the static notice page, so the SW must not answer it with the app shell.
+        navigateFallbackDenylist: [/^\/api\//, /^\/boxy(\/|$)/, /^\/legacy-redirect\.html$/],
+        cleanupOutdatedCaches: true,
+        clientsClaim: false,
+        skipWaiting: false,
+        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+      },
+      devOptions: { enabled: false },
+    }),
+  ],
 });

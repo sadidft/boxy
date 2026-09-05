@@ -1,0 +1,82 @@
+/* GENERATED FILE. Do not edit. Source: brand/tokens.json (npm run brand). */
+:root, [data-theme="dark"] {
+  --bg: #0a1628;
+  --surface: #111d2e;
+  --surface2: #1a2a3f;
+  --border: rgba(74,106,138,0.25);
+  --border-strong: rgba(74,106,138,0.45);
+  --accent: #00e5a0;
+  --on-accent: #0a1628;
+  --accent-fill: #00e5a0;
+  --on-accent-fill: #0a1628;
+  --accent-soft: rgba(0,229,160,0.12);
+  --accent2: #f5a623;
+  --text: #e0e6ed;
+  --text-muted: #8fa3b8;
+  --text-dim: #4a6a8a;
+  --danger: #ff4444;
+  --grain: rgba(255,255,255,0.03);
+  --shadow: 0 30px 80px rgba(0,0,0,0.6);
+  color-scheme: dark;
+}
+[data-theme="light"] {
+  --bg: #f4f7f9;
+  --surface: #ffffff;
+  --surface2: #e9eef3;
+  --border: rgba(61,90,120,0.22);
+  --border-strong: rgba(61,90,120,0.40);
+  --accent: #007a56;
+  --on-accent: #ffffff;
+  --accent-fill: #00e5a0;
+  --on-accent-fill: #0a1628;
+  --accent-soft: rgba(0,122,86,0.10);
+  --accent2: #8a5a00;
+  --text: #0a1628;
+  --text-muted: #3d5a78;
+  --text-dim: #4a6a8a;
+  --danger: #b3261e;
+  --grain: rgba(0,0,0,0.02);
+  --shadow: 0 20px 60px rgba(10,22,40,0.18);
+  color-scheme: light;
+}
+[data-theme="hc"] {
+  --bg: #000000;
+  --surface: #000000;
+  --surface2: #101820;
+  --border: #8fa3b8;
+  --border-strong: #e0e6ed;
+  --accent: #33ebb3;
+  --on-accent: #000000;
+  --accent-fill: #33ebb3;
+  --on-accent-fill: #000000;
+  --accent-soft: rgba(51,235,179,0.18);
+  --accent2: #ffc55c;
+  --text: #ffffff;
+  --text-muted: #d0d8e0;
+  --text-dim: #a8b6c4;
+  --danger: #ff6b6b;
+  --grain: transparent;
+  --shadow: none;
+  color-scheme: dark;
+}
+:root {
+  --label-mint: #5ddfa8;
+  --label-cyan: #00dbf1;
+  --label-violet: #cdaeff;
+  --label-pink: #ff9ddb;
+  --label-salmon: #ff9d90;
+  --label-amber: #f9b350;
+  --label-lime: #bbce5e;
+  --label-slate: #8fa3b8;
+  --radius-control: 6px;
+  --radius-card: 10px;
+  --radius-window: 14px;
+  --font-ui: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-reading: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-body: var(--font-ui);
+  --motion-fast: 150ms;
+  --motion-base: 200ms;
+  --motion-slow: 300ms;
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}

@@ -1,0 +1,241 @@
+{
+  "_meta": {
+    "app": "Boxy",
+    "version": "1.0.23",
+    "exportedAt": "2026-09-05T06:40:45.053Z",
+    "type": "full"
+  },
+  "settings": {
+    "theme": "system",
+    "primaryColor": "#0ea5e9",
+    "recentColors": [],
+    "features": {
+      "tableInCards": true,
+      "autoRecordHistory": true,
+      "cardDragDrop": true,
+      "tabDragReorder": true,
+      "masonryLayout": true
+    },
+    "limits": {
+      "maxBoxes": 10,
+      "maxTabsPerBox": 12,
+      "maxCardsPerTab": 50,
+      "maxColumnsPerTable": 10,
+      "bypassLimits": false
+    }
+  },
+  "boxes": [
+    {
+      "id": "box_mkf7y5c0cphg06",
+      "name": "My Workspace",
+      "icon": "boxy",
+      "order": 0,
+      "createdAt": 1768467600000,
+      "updatedAt": 1768467600000,
+      "isMinimized": false,
+      "isMaximized": false
+    }
+  ],
+  "tabs": [
+    {
+      "id": "tab_mkf7y5c0v5vfpj",
+      "boxId": "box_mkf7y5c0cphg06",
+      "name": "Quick Snippets",
+      "icon": "boxy",
+      "pinned": true,
+      "order": 0,
+      "createdAt": 1768467600000,
+      "updatedAt": 1768467600000
+    },
+    {
+      "id": "tab_mkf7y5c0j1lskh",
+      "boxId": "box_mkf7y5c0cphg06",
+      "name": "Email Templates",
+      "icon": "mail",
+      "pinned": false,
+      "order": 1,
+      "createdAt": 1768467600000,
+      "updatedAt": 1768467600000
+    },
+    {
+      "id": "tab_mkf7y5c0mssi3g",
+      "boxId": "box_mkf7y5c0cphg06",
+      "name": "Hours",
+      "icon": "clock",
+      "pinned": false,
+      "order": 9,
+      "createdAt": 1768467600000,
+      "updatedAt": 1768467600000
+    }
+  ],
+  "cards": [
+    {
+      "id": "card_mkf7y5c0jniik2",
+      "tabId": "tab_mkf7y5c0v5vfpj",
+      "title": "Welcome to Boxy! 🎉",
+      "content": "# Getting Started\n\nBoxy is your **offline clipboard manager**. Here's what you can do:\n\n- Create **Boxes** for different contexts (Work, Personal, etc.)\n- Organize with **Tabs** within each Box\n- Store snippets in **Cards** with Markdown support\n\n## Template Variables\n\nUse `{{date}}` for today's date: **{{date}}**\nUse `{{time}}` for current time: **{{time}}**\nUse `{{name}}` for custom input that prompts you when copying.\n\n## Keyboard Shortcuts\n\n- `Ctrl/Cmd + N` - New Card\n- `Ctrl/Cmd + K` - Search\n- `Ctrl/Cmd + Z` - Undo\n- `?` - Show all shortcuts",
+      "tags": [
+        "welcome",
+        "guide"
+      ],
+      "pinned": true,
+      "copyCount": 0,
+      "order": 0,
+      "createdAt": 1768467600000,
+      "updatedAt": 1768467600000,
+      "history": [
+        {
+          "timestamp": 1768467600000,
+          "action": "created"
+        }
+      ],
+      "table": null
+    },
+    {
+      "id": "card_mkf7y5c0vazzxj",
+      "tabId": "tab_mkf7y5c0v5vfpj",
+      "title": "Code Snippet Example",
+      "content": "```javascript\nfunction greet(name) {\n  return `Hello, ${name}!`;\n}\n\nconsole.log(greet('World'));\n```\n\nA simple JavaScript greeting function.",
+      "tags": [
+        "code",
+        "javascript"
+      ],
+      "pinned": false,
+      "copyCount": 0,
+      "order": 1,
+      "createdAt": 1768467600000,
+      "updatedAt": 1768467600000,
+      "history": [
+        {
+          "timestamp": 1768467600000,
+          "action": "created"
+        }
+      ],
+      "table": null
+    },
+    {
+      "id": "card_mkf7y5c0wj8mru",
+      "tabId": "tab_mkf7y5c0j1lskh",
+      "title": "Quick Reply Template",
+      "content": "Hi {{name}},\n\nThank you for reaching out! I've received your message and will get back to you within 24 hours.\n\nBest regards,\n{{sender_name}}\n\n---\nSent on {{date}} at {{time}}",
+      "tags": [
+        "email",
+        "template"
+      ],
+      "pinned": false,
+      "copyCount": 0,
+      "order": 0,
+      "createdAt": 1768467600000,
+      "updatedAt": 1768467600000,
+      "history": [
+        {
+          "timestamp": 1768467600000,
+          "action": "created"
+        }
+      ],
+      "table": null
+    },
+    {
+      "id": "card_mkf7y5c0zgezpv",
+      "tabId": "tab_mkf7y5c0mssi3g",
+      "title": "Weekly hours",
+      "content": "Hours worked this week.",
+      "tags": [
+        "time",
+        "Time"
+      ],
+      "pinned": true,
+      "copyCount": 3,
+      "order": 0,
+      "createdAt": 1768467600000,
+      "updatedAt": 1768467600000,
+      "history": [
+        {
+          "timestamp": 1768467599000,
+          "action": "copied"
+        }
+      ],
+      "table": {
+        "mode": "custom",
+        "columns": [
+          {
+            "id": "c1",
+            "name": "Day",
+            "order": 0
+          },
+          {
+            "id": "c2",
+            "name": "Start",
+            "order": 1
+          },
+          {
+            "id": "c3",
+            "name": "End",
+            "order": 2
+          },
+          {
+            "id": "c4",
+            "name": "Hours",
+            "order": 3
+          }
+        ],
+        "rows": [
+          {
+            "id": "r1",
+            "cells": {
+              "c1": "Mon",
+              "c2": "09:00",
+              "c3": "17:30",
+              "c4": "8.5"
+            },
+            "order": 0
+          },
+          {
+            "id": "r2",
+            "cells": {
+              "c1": "Tue",
+              "c2": "10:00",
+              "c3": "16:00",
+              "c4": "6"
+            },
+            "order": 1
+          },
+          {
+            "id": "r3",
+            "cells": {
+              "c1": "",
+              "c2": "",
+              "c3": "dur//all",
+              "c4": "sum//all"
+            },
+            "order": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "card_mkf7y5c0tvajak",
+      "tabId": "tab_mkf7y5c0mssi3g",
+      "title": "Invoice line",
+      "content": "Invoice {{number}} for {{client}} due {{date}}",
+      "tags": [
+        "invoice"
+      ],
+      "pinned": false,
+      "copyCount": 0,
+      "order": 1,
+      "createdAt": 1768467600000,
+      "updatedAt": 1768467600000,
+      "history": [],
+      "table": null
+    }
+  ],
+  "allTags": [
+    "welcome",
+    "guide",
+    "code",
+    "javascript",
+    "email",
+    "template"
+  ]
+}

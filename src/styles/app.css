@@ -1,0 +1,496 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+/* Map brand tokens to Tailwind utilities (bg-surface, text-muted, border-line, ...). */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface2: var(--surface2);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-accent-fill: var(--accent-fill);
+  --color-on-accent-fill: var(--on-accent-fill);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent2: var(--accent2);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-dim: var(--text-dim);
+  --color-danger: var(--danger);
+  --color-label-mint: var(--label-mint);
+  --color-label-cyan: var(--label-cyan);
+  --color-label-violet: var(--label-violet);
+  --color-label-pink: var(--label-pink);
+  --color-label-salmon: var(--label-salmon);
+  --color-label-amber: var(--label-amber);
+  --color-label-lime: var(--label-lime);
+  --color-label-slate: var(--label-slate);
+  --font-ui: var(--font-ui);
+  --font-display: var(--font-display);
+  --font-reading: var(--font-reading);
+  --radius-control: var(--radius-control);
+  --radius-card: var(--radius-card);
+  --radius-window: var(--radius-window);
+  --ease-out-brand: var(--motion-ease-out);
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/IBMPlexMono-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/IBMPlexMono-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/IBMPlexMono-600-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/IBMPlexMono-600-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/InstrumentSerif-400-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/InstrumentSerif-400-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+:root {
+  --text-scale: 1;
+  --control-h: 32px;
+  --card-gap: 12px;
+  --card-pad: 12px;
+  --shell-rail: 56px;
+  --shell-tabs: 40px;
+  --shell-omni: 48px;
+  --shell-quick: 40px;
+  font-size: calc(13px * var(--text-scale));
+}
+[data-density='compact'] {
+  --control-h: 28px;
+  --card-gap: 8px;
+  --card-pad: 9px;
+}
+[data-reading-font='true'] .reading {
+  font-family: var(--font-reading);
+  font-size: 1.05em;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+html {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior: none;
+}
+body {
+  margin: 0;
+  min-height: 100dvh;
+  line-height: 1.5;
+}
+::selection {
+  background: var(--accent-soft);
+}
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-control);
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+kbd {
+  font-family: var(--font-ui);
+}
+
+/* Reduced motion: honour OS setting and the app setting. */
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-motion='on']) * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+[data-motion='off'] * {
+  animation-duration: 0.001ms !important;
+  transition-duration: 0.001ms !important;
+}
+
+/* Grain overlay, same idea as the brand site (very subtle, never on hc). */
+.grain::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+}
+[data-theme='hc'] .grain::before {
+  display: none;
+}
+
+/* Components */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-control border border-line-strong bg-surface2 px-3 text-[0.95em] font-semibold whitespace-nowrap select-none transition-colors duration-150;
+    height: var(--control-h);
+  }
+  .btn:hover {
+    @apply border-accent/60 text-text;
+  }
+  .btn-primary {
+    @apply border-transparent bg-accent-fill text-on-accent-fill;
+  }
+  .btn-primary:hover {
+    @apply brightness-110;
+  }
+  .btn-accent {
+    @apply border-accent/50 bg-transparent text-accent;
+  }
+  .btn-accent:hover {
+    @apply bg-accent-soft;
+  }
+  .btn-ghost {
+    @apply border-transparent bg-transparent text-muted;
+  }
+  .btn-ghost:hover {
+    @apply bg-surface2 text-text;
+  }
+  .btn-danger {
+    @apply border-danger/40 bg-transparent text-danger;
+  }
+  .btn-danger:hover {
+    @apply bg-danger/10;
+  }
+  .btn-sm {
+    height: calc(var(--control-h) - 6px);
+    @apply px-2 text-[0.9em];
+  }
+  .icon-btn {
+    @apply inline-flex items-center justify-center rounded-control text-muted transition-colors duration-150;
+    width: var(--control-h);
+    height: var(--control-h);
+  }
+  .icon-btn:hover {
+    @apply bg-surface2 text-text;
+  }
+  .icon-btn[aria-pressed='true'],
+  .icon-btn[data-active='true'] {
+    @apply bg-surface2 text-text;
+  }
+  .input {
+    @apply w-full rounded-control border border-line-strong bg-surface px-2.5 text-text placeholder:text-dim;
+    height: var(--control-h);
+  }
+  .input:focus {
+    @apply border-accent outline-none;
+  }
+  .textarea {
+    @apply w-full rounded-control border border-line-strong bg-surface px-2.5 py-2 text-text placeholder:text-dim;
+  }
+  .textarea:focus {
+    @apply border-accent outline-none;
+  }
+  .select {
+    @apply rounded-control border border-line-strong bg-surface px-2 text-text;
+    height: var(--control-h);
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-line bg-surface2 px-2 text-[0.85em] leading-[1.8] text-muted whitespace-nowrap;
+  }
+  .chip[data-on='true'] {
+    @apply border-accent/40 bg-accent-soft text-accent;
+  }
+  .kbd {
+    @apply inline-block rounded-[4px] border border-line-strong border-b-2 bg-surface2 px-1 font-ui text-[0.8em] leading-[1.5] text-muted;
+  }
+  .card {
+    @apply relative flex flex-col overflow-hidden rounded-card border border-line bg-surface;
+    transition:
+      border-color var(--motion-fast) var(--motion-ease-out),
+      box-shadow var(--motion-fast) var(--motion-ease-out);
+  }
+  .card[data-pinned='true'] {
+    border-left: 3px solid var(--accent);
+  }
+  .card[data-selected='true'] {
+    @apply border-accent;
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .card:focus-visible {
+    outline: none;
+    @apply border-accent;
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .var {
+    @apply rounded-[4px] bg-accent-soft px-1 font-ui text-[0.92em] text-accent;
+  }
+  .panel {
+    @apply rounded-window border border-line-strong bg-surface;
+    box-shadow: var(--shadow);
+  }
+  .menu {
+    @apply z-50 min-w-44 rounded-card border border-line-strong bg-surface p-1;
+    box-shadow: var(--shadow);
+  }
+  .menu-item {
+    @apply flex w-full cursor-pointer items-center gap-2 rounded-control px-2 py-1.5 text-left text-[0.95em] text-text outline-none select-none;
+  }
+  .menu-item[data-highlighted],
+  .menu-item:hover {
+    @apply bg-surface2;
+  }
+  .menu-item[data-danger='true'] {
+    @apply text-danger;
+  }
+  .menu-sep {
+    @apply my-1 h-px bg-line;
+  }
+  .settings-row {
+    @apply flex flex-wrap items-center justify-between gap-3 border-b border-line py-3 last:border-b-0;
+  }
+  .seg {
+    @apply inline-flex overflow-hidden rounded-control border border-line-strong;
+  }
+  .seg > button {
+    @apply flex items-center gap-1 px-2.5 text-[0.9em] text-dim;
+    height: calc(var(--control-h) - 4px);
+  }
+  .seg > button[aria-pressed='true'] {
+    @apply bg-surface2 text-text;
+  }
+  .drag-region {
+    -webkit-app-region: drag;
+    app-region: drag;
+  }
+  .no-drag {
+    -webkit-app-region: no-drag;
+    app-region: no-drag;
+  }
+}
+
+/* Rendered markdown */
+.md {
+  overflow-wrap: anywhere;
+}
+.md > :first-child {
+  margin-top: 0;
+}
+.md > :last-child {
+  margin-bottom: 0;
+}
+.md p,
+.md ul,
+.md ol,
+.md pre,
+.md blockquote,
+.md table {
+  margin: 0 0 0.5em;
+}
+.md h1,
+.md h2,
+.md h3,
+.md h4 {
+  margin: 0.6em 0 0.3em;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text);
+}
+.md h1 {
+  font-size: 1.25em;
+}
+.md h2 {
+  font-size: 1.15em;
+}
+.md h3 {
+  font-size: 1.05em;
+}
+.md ul,
+.md ol {
+  padding-left: 1.4em;
+}
+.md ul {
+  list-style: disc;
+}
+.md ol {
+  list-style: decimal;
+}
+.md li {
+  margin: 0.1em 0;
+}
+.md li.task-list-item {
+  list-style: none;
+  margin-left: -1.4em;
+}
+.md li.task-list-item input {
+  margin-right: 0.4em;
+  accent-color: var(--accent);
+}
+.md a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.md code {
+  font-family: var(--font-ui);
+  font-size: 0.95em;
+  background: var(--surface2);
+  border-radius: 4px;
+  padding: 0 0.3em;
+}
+.md pre {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  overflow: auto;
+  line-height: 1.55;
+}
+.md pre code {
+  background: none;
+  padding: 0;
+}
+.md blockquote {
+  border-left: 3px solid var(--border-strong);
+  padding-left: 0.8em;
+  color: var(--text-muted);
+}
+.md table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.95em;
+}
+.md th,
+.md td {
+  border-bottom: 1px solid var(--border);
+  padding: 3px 6px;
+  text-align: left;
+}
+.md th {
+  color: var(--text-dim);
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.md hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 0.8em 0;
+}
+.md img {
+  max-width: 100%;
+  border-radius: 6px;
+}
+.md strong {
+  color: var(--text);
+}
+.md del {
+  color: var(--text-dim);
+}
+.md.clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--clamp, 8);
+  overflow: hidden;
+}
+
+/* Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+/* Safe areas for installed mobile app */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.fade-in {
+  animation: fade-in var(--motion-base) var(--motion-ease-out);
+}
+@keyframes slide-in-right {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+.slide-in-right {
+  animation: slide-in-right var(--motion-slow) var(--motion-ease-out);
+}
+@keyframes slide-up {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+.slide-up {
+  animation: slide-up var(--motion-slow) var(--motion-ease-out);
+}

@@ -1,30 +1,53 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { RouterProvider } from '@tanstack/react-router';
 import { registerSW } from 'virtual:pwa-register';
-import "./index.css";
-import { App } from "./App";
+import '@/styles/app.css';
+import { initI18n, detectLocale } from '@/i18n';
+import { useSettings } from '@/app/settings-store';
+import { initPwaListeners, usePwa } from '@/app/pwa';
+import { maybeDailySnapshot } from '@/app/backup';
+import { purgeExpired } from '@/data/repo/trash';
+import { flushProjections } from '@/data/store';
+import { TooltipProvider } from '@/components/ui/primitives';
+import { router } from '@/router';
 
-// Register PWA Service Worker with auto-update
-const updateSW = registerSW({
-  onNeedRefresh() {
-    // Show a prompt to user that new content is available
-    if (confirm('New content available. Reload?')) {
-      updateSW(true);
-    }
-  },
-  onOfflineReady() {
-    console.log('Boxy is ready for offline use');
-  },
-  onRegistered(registration) {
-    console.log('SW registered:', registration);
-  },
-  onRegisterError(error) {
-    console.error('SW registration error:', error);
+initI18n(detectLocale('auto'));
+initPwaListeners();
+
+async function boot(): Promise<void> {
+  await useSettings.getState().load();
+  const root = createRoot(document.getElementById('root')!);
+  root.render(
+    <StrictMode>
+      <TooltipProvider delayDuration={400} skipDelayDuration={200}>
+        <RouterProvider router={router} />
+      </TooltipProvider>
+    </StrictMode>,
+  );
+
+  // Housekeeping after first paint.
+  setTimeout(() => {
+    void purgeExpired();
+    void maybeDailySnapshot();
+  }, 4000);
+
+  window.addEventListener('pagehide', () => void flushProjections());
+
+  if ('serviceWorker' in navigator && import.meta.env.PROD) {
+    const updateSW = registerSW({
+      immediate: true,
+      onNeedRefresh() {
+        usePwa.getState().setUpdate(async () => {
+          await flushProjections();
+          await updateSW(true);
+        });
+      },
+      onOfflineReady() {
+        usePwa.getState().setOfflineReady();
+      },
+    });
   }
-});
+}
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+void boot();

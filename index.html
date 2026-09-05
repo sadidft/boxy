@@ -1,47 +1,53 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Boxy - Your Offline Clipboard Manager</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Boxy is a powerful, offline-first clipboard manager for organizing text snippets, code templates, and canned responses." />
-    <meta name="keywords" content="clipboard manager, offline, snippets, templates, markdown, productivity" />
-    <meta name="author" content="Boxy Team" />
-    
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#0f172a" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Boxy" />
-    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Boxy: Your snippets, offline first.</title>
+    <meta name="description" content="Boxy keeps your snippets, templates and tables in Boxes, Tabs and Cards. Works offline, stores data on your device, copies with one key." />
     <meta name="application-name" content="Boxy" />
-    <meta name="msapplication-TileColor" content="#0f172a" />
-    <meta name="msapplication-config" content="/browserconfig.xml" />
-    
-    <!-- Favicons -->
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
-    <link rel="mask-icon" href="/logo.svg" color="#069BDE" />
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json" />
-    
-    <!-- Open Graph / Social -->
+    <meta name="apple-mobile-web-app-title" content="Boxy" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#0a1628" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="canonical" href="https://boxy.sadid.my.id/" />
+    <link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icons/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/icons/favicon-16.png" sizes="16x16" type="image/png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/IBMPlexMono-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/IBMPlexMono-600-latin.woff2" as="font" type="font/woff2" crossorigin />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Boxy - Your Offline Clipboard Manager" />
-    <meta property="og:description" content="A powerful, offline-first clipboard manager for organizing text snippets, code templates, and canned responses." />
-    <meta property="og:image" content="/icons/og-image.png" />
+    <meta property="og:site_name" content="Boxy" />
+    <meta property="og:title" content="Boxy: Your snippets, offline first." />
+    <meta property="og:description" content="Boxes, Tabs and Cards for everything you paste more than once. Offline, on your device, free." />
+    <meta property="og:url" content="https://boxy.sadid.my.id/" />
+    <meta property="og:image" content="https://boxy.sadid.my.id/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Boxy - Your Offline Clipboard Manager" />
-    <meta name="twitter:description" content="A powerful, offline-first clipboard manager for organizing text snippets, code templates, and canned responses." />
+    <script>
+      // Apply the stored theme before paint to avoid a flash. Values are validated; anything else falls back to system.
+      (function () {
+        try {
+          var t = localStorage.getItem('boxy.theme') || 'system';
+          var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = t === 'light' || t === 'hc' || t === 'dark' ? t : dark ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', theme);
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', theme === 'light' ? '#f4f7f9' : theme === 'hc' ? '#000000' : '#0a1628');
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <div style="padding: 24px; font-family: ui-monospace, monospace">Boxy needs JavaScript to run. Your data stays on this device.</div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
-  
   </body>
 </html>
