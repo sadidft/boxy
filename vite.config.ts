@@ -40,6 +40,9 @@ export default defineConfig({
           data: ['yjs', 'y-indexeddb', 'dexie', 'dexie-react-hooks'],
           markdown: ['markdown-it', 'dompurify'],
         },
+        // Icons loaded on demand (lucide-react/dynamic) are about 1,500 tiny chunks. They live in their own
+        // directory so the service worker can leave them out of the precache and cache them on first use instead.
+        chunkFileNames: (chunk) => (chunk.facadeModuleId?.includes('/lucide-react/dist/esm/icons/') ? 'assets/icons/[name]-[hash].js' : 'assets/[name]-[hash].js'),
       },
     },
   },
@@ -83,6 +86,14 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2,webmanifest}'],
+        globIgnores: ['**/assets/icons/**'],
+        runtimeCaching: [
+          {
+            urlPattern: /\/assets\/icons\/.*\.js$/,
+            handler: 'CacheFirst',
+            options: { cacheName: 'boxy-icons', expiration: { maxEntries: 400, maxAgeSeconds: 60 * 60 * 24 * 365 }, cacheableResponse: { statuses: [200] } },
+          },
+        ],
         navigateFallback: '/index.html',
         // /boxy/* is the address of the previous app; Vercel rewrites it to the static notice page, so the SW must not answer it with the app shell.
         navigateFallbackDenylist: [/^\/api\//, /^\/boxy(\/|$)/, /^\/legacy-redirect\.html$/],

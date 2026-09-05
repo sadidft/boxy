@@ -77,7 +77,7 @@
       "destination": "/legacy-redirect.html"
     },
     {
-      "source": "/((?!assets/|fonts/|icons/).*)",
+      "source": "/((?!assets/|fonts/|icons/|workbox-|sw.js).*)",
       "destination": "/index.html"
     }
   ]
