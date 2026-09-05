@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const args = new Set(process.argv.slice(2));
 
-const targets = ['src/i18n', 'src/content', 'README.md', 'index.html', 'CONTRIBUTING.md', 'docs'];
+const targets = ['src/i18n', 'src/content', 'README.md', 'index.html', 'CONTRIBUTING.md', 'docs', 'legacy-site', 'public/legacy-redirect.html'];
 const versionWhitelist = new Set(['docs/MASTERPLAN.md', 'docs/ISSUES_F0_F1.md', 'docs/SPEC_F0_F1.md', 'docs/regressions.md', 'CHANGELOG.md']);
 const versionWhitelistDirs = ['docs/adr/'];
 const skipDirs = ['docs/legacy/']; // verbatim copies of the previous app, kept for reference only

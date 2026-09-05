@@ -13,7 +13,13 @@ The old site opens `https://boxy.sadid.my.id/import/handoff` in a new tab. The n
 `boxy-handoff-ready {nonce}` to its opener for each allow-listed origin. The old site answers with
 `boxy-handoff-data {nonce, payload: {primary, backup}, sentAt}`. The new tab checks origin and nonce, stores the
 payload in Dexie (`handoff`, `imported = 0`), replies `boxy-handoff-received {nonce, counts}` and shows the normal
-import preview. `Cross-Origin-Opener-Policy: same-origin-allow-popups` keeps `window.opener` available.
+import preview.
+
+Boxy sends no `Cross-Origin-Opener-Policy` header. The handoff page is the popup, not the opener: a COOP value
+other than `unsafe-none` on the popup puts it in a new browsing context group and `window.opener` becomes null,
+which would leave the page waiting forever. The service worker serves the app shell from cache with the headers of
+the original response, so the header has to be absent site-wide, not only on `/import/handoff`. Boxy needs no
+cross-origin isolation (no SharedArrayBuffer), so nothing is lost.
 
 The allow-list is `https://sadidft.github.io` plus `VITE_LEGACY_ORIGIN` (comma separated) for tests.
 

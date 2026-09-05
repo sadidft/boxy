@@ -37,6 +37,11 @@ export default tseslint.config(
   {
     files: ['scripts/**/*.mjs', 'tools/**/*.js', '*.config.{js,ts,mjs}', 'e2e/**/*.{ts,mjs}'],
     languageOptions: { globals: { ...globals.node } },
+  },
+  {
+    // service worker kill switch of the previous site
+    files: ['legacy-site/sw.js'],
+    languageOptions: { globals: { ...globals.serviceworker } },
     rules: { '@typescript-eslint/no-require-imports': 'off' },
   },
 );

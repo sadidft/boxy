@@ -3,11 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
   "description": "Your snippets, offline first.",
   "license": "MIT",
-  "engines": {
-    "node": ">=20.19"
-  },
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "npm run brand && tsc -p tsconfig.json --noEmit && vite build",
